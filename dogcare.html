@@ -7,6 +7,19 @@
   </head>
   <style>
     /*Provisorisk styling, flyttes til stylesheet*/
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0px;
+    }
+
+    .main-container {
+      width: 100%;
+      height: 100vh;
+      background-image: url("dating-assets/background.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+    }
     #dog-care-cards {
       display: grid;
       grid: 1fr 1fr/ 1fr 1fr;
@@ -46,8 +59,10 @@
     }
   </style>
   <body>
-    <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
-    <div id="dog-care-cards"></div>
+    <div class="main-container">
+      <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
+      <div id="dog-care-cards"></div>
+    </div>
     <script>
       //Henter inn knapp og div til å vise kort i
       let dogCareCards = document.getElementById("dog-care-cards");
@@ -116,28 +131,29 @@
         const newOwnerResult = await fetch("https://randomuser.me/api/");
         const newOwner = await newOwnerResult.json();
 
-        const newDogResult = await fetch("https://dog.ceo/api/breeds/image/random");
-        const newDog = await newDogResult.json(); 
+        const newDogResult = await fetch(
+          "https://dog.ceo/api/breeds/image/random"
+        );
+        const newDog = await newDogResult.json();
 
         return {
           dog: newDog.message,
-          owner: newOwner.results[0]
-        }
+          owner: newOwner.results[0],
+        };
       }
-
 
       //Funksjon for å slette kort
       async function deleteCard(index) {
         dogs.splice(index, 1);
         owners.splice(index, 1);
 
-        const {dog, owner} = await getNewDogAndOwner();
+        const { dog, owner } = await getNewDogAndOwner();
 
         dogs.push(dog);
         owners.push(owner);
 
         displayDogsAndOwners();
-        }
+      }
 
       //Funksjon for å laste inn nye kort
       async function showNewCards() {
