@@ -28,6 +28,19 @@ a {
 .dog-care {
   background-color: green;
 }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0px;
+}
+
+.main-container {
+  width: 100%;
+  height: 100vh;
+  background-image: url("dating-assets/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
 /* footer styling */
 footer {
   position: absolute;
@@ -37,4 +50,42 @@ footer {
 }
 .test-img {
   width: 100px;
+}
+
+#dog-care-cards {
+  display: grid;
+  grid: 1fr 1fr/ 1fr 1fr;
+  place-content: center;
+  gap: 40px;
+  margin: 100px 300px;
+}
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.card {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(3, auto);
+  place-content: center;
+  gap: 10px;
+  border: 2px solid rgb(220, 130, 200);
+  border-radius: 8px;
+  padding: 10px;
+}
+.btn {
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
