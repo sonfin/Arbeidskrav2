@@ -1,69 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-</head>
-<body>
-  <div id="dog-care-cards"></div>
-  <button id="show-new-cards-btn">Vis 10 nye kort</button>
-  <script>
-    let dogCareCards = document.getElementById("dog-care-cards");
-    const showNewCardsBtn = document.getElementById("show-new-cards-btn");
-    showNewCardsBtn.addEventListener("click", initializeDogsAndOwners);
-
-    let dogs = [];
-    let owners = [];
-
-    async function getDogs() {
-      const dogsRequest = await fetch("https://dog.ceo/api/breeds/image/random/10");
-      const dogsResult = await dogsRequest.json();
-      return dogsResult.message;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Care</title>
+  </head>
+  <style>
+    #dog-care-cards {
+      display: grid;
+      grid: 1fr 1fr/ 1fr 1fr;
+      place-content: center;
+      gap: 40px;
     }
-
-    async function getOwners() {
-      const ownersRequest = await fetch("https://randomuser.me/api/?results=10&inc=name,location,picture");
-      const ownersResult = await ownersRequest.json();
-      return ownersResult.results;
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
+    .image-container {
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+    }
+    .card {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      grid-template-rows: repeat(3, auto);
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+    }
+  </style>
+  <body>
+    <button id="show-new-cards-btn">Vis 10 nye kort</button>
+    <div id="dog-care-cards"></div>
+    <script>
+      let dogCareCards = document.getElementById("dog-care-cards");
+      const showNewCardsBtn = document.getElementById("show-new-cards-btn");
+      showNewCardsBtn.addEventListener("click", initializeDogsAndOwners);
 
-    async function initializeDogsAndOwners() {
-      try{
-        dogs = await getDogs();
-        owners = await getOwners();
-        displayDogsAndOwners();
-      } catch(error) {
-        console.error("Error med å laste innhold", error);
+      let dogs = [];
+      let owners = [];
+
+      async function getDogs() {
+        const dogsRequest = await fetch(
+          "https://dog.ceo/api/breeds/image/random/10"
+        );
+        const dogsResult = await dogsRequest.json();
+        return dogsResult.message;
       }
-    }
 
-    function displayDogsAndOwners(){
-      const cards = owners.map((owner, index) => `
+      async function getOwners() {
+        const ownersRequest = await fetch(
+          "https://randomuser.me/api/?results=10&inc=name,location,picture"
+        );
+        const ownersResult = await ownersRequest.json();
+        return ownersResult.results;
+      }
+
+      async function initializeDogsAndOwners() {
+        try {
+          dogs = await getDogs();
+          owners = await getOwners();
+          displayDogsAndOwners();
+        } catch (error) {
+          console.error("Error med å laste innhold", error);
+        }
+      }
+
+      function displayDogsAndOwners() {
+        const cards = owners.slice(0, 10)
+          .map(
+            (owner, index) => `
         <div class="card">
-          <img src="${dogs[index]}" style="width: 300px; height: 300px;">
-          <img src="${owner.picture.large}" style="width: 300px; height: 300px;">
-          <h3>${owner.name.first} ${owner.name.last}</h3>
-          <p>${owner.location.city}, ${owner.location.country}</p>
+          <div class="image-container">
+            <img src="${dogs[index]}" alt="hund">
+          </div>
+          <div class="image-container">
+            <img src="${owner.picture.large}" alt="eier">
+          </div>
+          <p>Eier: ${owner.name.first} ${owner.name.last}</p>
+          <p>Bosted: ${owner.location.city}, ${owner.location.country}</p>
           <button onclick="deleteCard(${index})">Slett</button>
           <button>Chat</button>
         </div>
-      `).join('');
+      `
+          )
+          .join("");
 
-      dogCareCards.innerHTML = cards;
-    }
+        dogCareCards.innerHTML = cards;
+      }
 
-    function deleteCard(index){
-      dogs.splice(index, 1);
-      owners.splice(index, 1);
-      displayDogsAndOwners();
-    }
+      function deleteCard(index) {
+        dogs.splice(index, 1);
+        owners.splice(index, 1);
+        displayDogsAndOwners();
+      }
 
-    async function showNewCards(){
-      await initializeDogsAndOwners();
-    }
+      async function showNewCards() {
+        await initializeDogsAndOwners();
+      }
 
-    initializeDogsAndOwners();
-  </script>
-</body>
+      initializeDogsAndOwners();
+    </script>
+  </body>
 </html>
