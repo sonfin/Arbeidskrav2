@@ -12,8 +12,7 @@
       grid: 1fr 1fr/ 1fr 1fr;
       place-content: center;
       gap: 40px;
-      
-      
+      margin: 100px 300px;
     }
     .card img {
       width: 100%;
@@ -21,24 +20,22 @@
       object-fit: cover;
     }
     .image-container {
-      width: 300px;
-      height: 300px;
+      width: 200px;
+      height: 200px;
       overflow: hidden;
+      border-radius: 8px;
     }
     .card {
       display: grid;
       grid-template-columns: repeat(2, auto);
       grid-template-rows: repeat(3, auto);
-      grid-column-gap: 10px;
-      grid-row-gap: 10px;
-      border: 2px solid grey;
-      border-radius: 10px;
-      padding: 5px;
+      place-content: center;
+      gap: 10px;
+      border: 2px solid rgb(220, 130, 200);
+      border-radius: 8px;
+      padding: 10px;
     }
-    .btn{
-      background-color: p;
-    }
-    .btn{
+    .btn {
       margin: 5px;
       padding: 10px;
       cursor: pointer;
@@ -49,7 +46,7 @@
     }
   </style>
   <body>
-    <button id="show-new-cards-btn">Vis 10 nye kort</button>
+    <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
     <div id="dog-care-cards"></div>
     <script>
       //Henter inn knapp og div til å vise kort i
@@ -91,7 +88,8 @@
 
       //Funksjon for å lage kort med data fra dogs og owners
       function displayDogsAndOwners() {
-        const cards = owners.slice(0, 10)
+        const cards = owners
+          .slice(0, 10)
           .map(
             (owner, index) => `
         <div class="card">
@@ -113,14 +111,35 @@
         dogCareCards.innerHTML = cards;
       }
 
-      //Funksjon for å slette kort
-      function deleteCard(index) {
-        dogs.splice(index, 1);
-        owners.splice(index, 1);
-        displayDogsAndOwners();
+      //Funksjon for å hente inn nytt kort
+      async function getNewDogAndOwner() {
+        const newOwnerResult = await fetch("https://randomuser.me/api/");
+        const newOwner = await newOwnerResult.json();
+
+        const newDogResult = await fetch("https://dog.ceo/api/breeds/image/random");
+        const newDog = await newDogResult.json(); 
+
+        return {
+          dog: newDog.message,
+          owner: newOwner.results[0]
+        }
       }
 
-      //Funksjon for å laste inn nye kort?
+
+      //Funksjon for å slette kort
+      async function deleteCard(index) {
+        dogs.splice(index, 1);
+        owners.splice(index, 1);
+
+        const {dog, owner} = await getNewDogAndOwner();
+
+        dogs.push(dog);
+        owners.push(owner);
+
+        displayDogsAndOwners();
+        }
+
+      //Funksjon for å laste inn nye kort
       async function showNewCards() {
         await initializeDogsAndOwners();
       }
