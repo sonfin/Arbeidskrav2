@@ -1,8 +1,13 @@
 /* Universal styling */
+
 * {
   border: 0;
   padding: 0;
   margin: 0;
+}
+main {
+  height: 120vh;
+  display: flex;
 }
 nav {
   display: flex;
@@ -28,13 +33,81 @@ a {
 .dog-care {
   background-color: green;
 }
-/* footer styling */
-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
+
+/* main styling */
+
+/* chat box styling */
+.chat-box {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 15px;
+  border: 2px solid black;
+  width: 275px;
+  height: 50vh;
+  background-color: #044f48;
+  opacity: 90%;
+  font-family: Arial, sans-serif;
 }
+.chat-box img {
+  height: 35px;
+  width: 35px;
+}
+.chat-box h1 {
+  font-size: 0.8rem;
+  color: rgb(232, 232, 232);
+}
+.chat-box h2 {
+  font-size: 0.7rem;
+  color: rgb(190, 190, 190);
+}
+.chat-box p {
+  font-size: 1.1rem;
+}
+.chat-name {
+  position: relative;
+  background-color: rgb(35, 73, 43);
+  border-radius: 12px 12px 0 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.owner-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-90%, -50%);
+  text-align: left;
+}
+/* Her må jeg fikse img sizing. Så det ikke strekkes... */
+.img-div {
+  display: flex;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 2px solid rgb(10, 59, 13);
+  margin: 5px;
+  overflow: hidden;
+}
+#close-button {
+  margin: 5px;
+  
+}
+#close-button:hover {
+  cursor: pointer;
+  opacity: 80%;
+}
+.chat-messages {
+  background-color: yellow;
+}
+.chat-text-section {
+  background-color: aqua;
+}
+
+/* footer styling */
+
 .test-img {
   width: 100px;
 }

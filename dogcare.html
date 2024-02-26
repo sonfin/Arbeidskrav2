@@ -17,7 +17,37 @@
         >
       </nav>
     </header>
-    <main></main>
+    <main>
+      <div class="chat-box">
+        <div class="chat-name">
+          <div class="img-div">
+            <img
+              src="./dogcare-assets/profile-photo.jpg"
+              alt="Profilbilde"
+              id="owner-picture"
+            />
+          </div>
+          <div class="owner-info">
+            <h1 id="owner-name">Test for styling</h1>
+            <h2 id="dog-race">Chihuahua</h2>
+          </div>
+          <img
+            src="./dogcare-assets/close.png"
+            alt="close chat button"
+            id="close-button"
+          />
+        </div>
+        <div class="chat-messages"></div>
+        <div class="chat-text-section">
+          <input
+            type="text"
+            placeholder="Skriv melding:"
+            id="chat-text-input"
+          />
+          <input type="button" value="Send" id="chat-send-button" />
+        </div>
+      </div>
+    </main>
     <footer>
       <img
         src="./dogcare-assets/test.jpg"
@@ -31,15 +61,28 @@
 
       //oppgave 5.1
       const testBtn = document.getElementById("test-button");
+      const closeBtn = document.getElementById("close-button");
+      const ownerImg = document.getElementById("owner-picture");
+      const ownerName = document.getElementById("owner-name");
+      const dogRace = document.getElementById("dog-race");
+
       let chatBoxOpen = false;
 
       testBtn.onclick = chatBox;
+      closeBtn.onclick = closeChat;
 
       function chatBox() {
-        chatBoxOpen = true;
-        console.log(chatBoxOpen);
-        console.log("Test 3")
-        
+        const chatDiv = document.querySelector(".chat-box");
+        chatDiv.style.display = "flex";
+        ownerImg.src = owner.picture.large;
+        ownerImg.alt = "eier">
+
+
+      }
+
+      function closeChat() {
+        const chatDiv = document.querySelector(".chat-box");
+        chatDiv.style.display = "none";
       }
     </script>
   </body>
