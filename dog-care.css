@@ -1,3 +1,4 @@
+/* Universal styling */
 * {
   border: 0;
   padding: 0;
@@ -11,6 +12,7 @@ a {
   text-decoration: none;
   color: black;
 }
+/* nav bar styling */
 .nav-div {
   height: 50px;
   width: 100%;
@@ -25,4 +27,14 @@ a {
 }
 .dog-care {
   background-color: green;
+}
+/* footer styling */
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+.test-img {
+  width: 100px;
 }
