@@ -18,7 +18,28 @@
       </nav>
     </header>
     <main></main>
-    <footer></footer>
-    <script></script>
+    <footer>
+      <img
+        src="./dogcare-assets/test.jpg"
+        alt="Testknapp"
+        class="test-img"
+        id="test-button"
+      />
+    </footer>
+    <script>
+      // Lager script her foreløpig så får vi heller flytte den senere :)
+
+      //oppgave 5.1
+      const testBtn = document.getElementById("test-button");
+      const chatBoxOpen = false;
+
+      testBtn.onclick = chatBox();
+
+      function chatBox() {
+        chatBoxOpen = true;
+        console.log(chatBoxOpen);
+        console.log("Test")
+      }
+    </script>
   </body>
 </html>
