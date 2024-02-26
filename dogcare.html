@@ -30,6 +30,15 @@
       grid-column-gap: 10px;
       grid-row-gap: 10px;
     }
+    .btn{
+      margin: 5px;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
   </style>
   <body>
     <button id="show-new-cards-btn">Vis 10 nye kort</button>
@@ -86,8 +95,8 @@
           </div>
           <p>Eier: ${owner.name.first} ${owner.name.last}</p>
           <p>Bosted: ${owner.location.city}, ${owner.location.country}</p>
-          <button class="delete-btn" onclick="deleteCard(${index})">Slett</button>
-          <button class="chat-btn">Chat</button>
+          <button id="delete-btn" class="btn" onclick="deleteCard(${index})">Slett</button>
+          <button id="chat-btn" class="btn">Chat</button>
         </div>
       `
           )
