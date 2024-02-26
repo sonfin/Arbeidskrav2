@@ -1,3 +1,32 @@
+* {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+nav {
+  display: flex;
+}
+a {
+  width: 100vw;
+  text-decoration: none;
+  color: black;
+}
+.nav-div {
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+}
+.dating {
+  background-color: pink;
+}
+.nav-div:hover {
+  opacity: 90%;
+}
+.dog-care {
+  background-color: green;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0px;
