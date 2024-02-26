@@ -31,14 +31,15 @@
 
       //oppgave 5.1
       const testBtn = document.getElementById("test-button");
-      const chatBoxOpen = false;
+      let chatBoxOpen = false;
 
-      testBtn.onclick = chatBox();
+      testBtn.onclick = chatBox;
 
       function chatBox() {
         chatBoxOpen = true;
         console.log(chatBoxOpen);
-        console.log("Test")
+        console.log("Test 2")
+        
       }
     </script>
   </body>
