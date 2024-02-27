@@ -64,7 +64,7 @@
     }
   </style>
   <body>
-        <header>
+    <header>
       <nav>
         <a href="./dating.html"
           ><div class="nav-div dating"><p>Dating</p></div></a
@@ -126,10 +126,11 @@
 
       //Funksjon for å lage kort med data fra dogs og owners
       function displayDogsAndOwners() {
-        const cards = owners
-          .slice(0, 10)
-          .map(
-            (owner, index) => `
+        let cards = "";
+        for (let index = 0; index < 10; index++) {
+          const owner = owners[index];
+          const dog = dogs[index];
+          cards += `
         <div class="card">
           <div class="image-container">
             <img src="${dogs[index]}" alt="hund">
@@ -141,12 +142,14 @@
           <p>Bosted: ${owner.location.city}, ${owner.location.country}</p>
           <button id="delete-btn" class="btn" onclick="deleteCard(${index})">Slett</button>
           <button id="chat-btn" class="btn">Chat</button>
-        </div>
-      `
-          )
-          .join("");
-
+        </div>`;
+        }
         dogCareCards.innerHTML = cards;
+
+        const cardElements = document.querySelectorAll(".card");
+        cardElements.forEach((card, index) => {
+          card.addEventListener("click", () => dogGreeting());
+        });
       }
 
       //Funksjon for å hente inn nytt kort
@@ -194,8 +197,22 @@
       function chatBox() {
         chatBoxOpen = true;
         console.log(chatBoxOpen);
-        console.log("Test 2")
-        
+        console.log("Test 2");
+      }
+
+      //OPPGAVE 6
+
+      const dogSounds = [
+        "Voff voff",
+        "Grrr!",
+        "Mjau??",
+        "Voff!",
+        "Voff voff voff",
+        "WRAFF!!!",
+      ];
+
+      function dogGreeting() {
+        alert(dogSounds[Math.floor(Math.random() * dogSounds.length)]);
       }
     </script>
   </body>
