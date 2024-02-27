@@ -48,6 +48,7 @@
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(15.6px);
       border: 1px solid rgba(255, 255, 255, 0.55);
+      font-size: 14px;
     }
     .btn {
       padding: 10px;
@@ -59,10 +60,32 @@
     }
     #show-new-cards-btn {
       position: sticky;
-      top: 20px;
+      top: 5px;
       left: 20px;
     }
+    .dog-greeting-bubble {
+        position: absolute;
+        top: -10%;
+        left: 80%;
+        width: 20%; 
+        height: 10%; 
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+      }
 
+      .dog-icon {
+        margin-right: 10px;
+      }
+
+      .dog-icon img {
+        width: 20px; /* Adjust as needed */
+        height: 20px; /* Adjust as needed */
+      }
   </style>
   <body>
     <header>
@@ -202,7 +225,7 @@
         console.log("Test 2");
       }
 
-      //OPPGAVE 6
+      //OPPGAVE 6 - funksjon for å lage snakkeboble når bruker trykker på kortet
 
       const dogSounds = [
         "Voff voff",
@@ -213,6 +236,11 @@
         "WRAFF!!!",
       ];
       function dogGreeting(card) {
+        const existingBubble = card.querySelector(".dog-greeting-bubble");
+        if (existingBubble) {
+          existingBubble.remove();
+        }
+
         const dogGreetingBubble = document.createElement("div");
         dogGreetingBubble.classList.add("dog-greeting-bubble");
         dogGreetingBubble.innerHTML = `
