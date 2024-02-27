@@ -73,6 +73,7 @@ button {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 .matched-cards {
@@ -82,4 +83,17 @@ button {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ height: 500px;
 }
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+.image-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
