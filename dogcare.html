@@ -105,10 +105,12 @@
 
       //Funksjon for å lage kort med data fra dogs og owners
       function displayDogsAndOwners() {
-        const cards = owners
-          .slice(0, 10)
-          .map(
-            (owner, index) => `
+        let cards = ""
+        for (let index = 0; index < 10; index++) {
+          const owner = owners[index];
+          const dog = dogs[index];
+          cards += 
+          `
         <div class="card">
           <div class="image-container">
             <img src="${dogs[index]}" alt="hund">
@@ -120,11 +122,8 @@
           <p>Bosted: ${owner.location.city}, ${owner.location.country}</p>
           <button id="delete-btn" class="btn" onclick="deleteCard(${index})">Slett</button>
           <button id="chat-btn" class="btn">Chat</button>
-        </div>
-      `
-          )
-          .join("");
-
+        </div>`;
+        }
         dogCareCards.innerHTML = cards;
       }
 
