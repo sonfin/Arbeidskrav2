@@ -62,6 +62,7 @@
       top: 20px;
       left: 20px;
     }
+
   </style>
   <body>
     <header>
@@ -146,9 +147,10 @@
         }
         dogCareCards.innerHTML = cards;
 
+        // Event listener for hvert kort til dogGreeting
         const cardElements = document.querySelectorAll(".card");
         cardElements.forEach((card, index) => {
-          card.addEventListener("click", () => dogGreeting());
+          card.addEventListener("click", () => dogGreeting(card));
         });
       }
 
@@ -210,9 +212,18 @@
         "Voff voff voff",
         "WRAFF!!!",
       ];
-
-      function dogGreeting() {
-        alert(dogSounds[Math.floor(Math.random() * dogSounds.length)]);
+      function dogGreeting(card) {
+        const dogGreetingBubble = document.createElement("div");
+        dogGreetingBubble.classList.add("dog-greeting-bubble");
+        dogGreetingBubble.innerHTML = `
+        <div class="dog-icon">
+          <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
+        </div>
+        <div class="dog-greeting-text">
+          <p>${dogSounds[Math.floor(Math.random() * dogSounds.length)]}</p>
+        </div>
+        `;
+        card.appendChild(dogGreetingBubble);
       }
     </script>
   </body>
