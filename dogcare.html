@@ -64,28 +64,28 @@
       left: 20px;
     }
     .dog-greeting-bubble {
-        position: absolute;
-        top: -10%;
-        left: 80%;
-        width: 20%; 
-        height: 10%; 
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-        font-size: 13px;
-      }
+      position: absolute;
+      top: -10%;
+      left: 80%;
+      width: 20%;
+      height: 10%;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+    }
 
-      .dog-icon {
-        margin-right: 10px;
-      }
+    .dog-icon {
+      margin-right: 10px;
+    }
 
-      .dog-icon img {
-        width: 20px;
-        height: 20px;
-      }
+    .dog-icon img {
+      width: 20px;
+      height: 20px;
+    }
   </style>
   <body>
     <header>
@@ -236,6 +236,10 @@
         "WRAFF!!!",
       ];
       function dogGreeting(card) {
+        if (event.target.id === "delete-btn" || event.target.id === "chat-btn") { //gjør at funksjonen stopper hvis bruker klikker på sletteknappen og chatknappen
+          return;
+        }
+
         const existingBubble = card.querySelector(".dog-greeting-bubble");
         if (existingBubble) {
           existingBubble.remove();
@@ -252,6 +256,13 @@
         </div>
         `;
         card.appendChild(dogGreetingBubble);
+
+        if (dogGreetingBubble) {
+          dogGreetingBubble.addEventListener("click", (event) => {
+            event.stopPropagation(); // gjør at dogGreetingCard ikke trigges igjen https://www.w3schools.com/jsref/event_stoppropagation.asp
+            dogGreetingBubble.remove();
+          });
+        }
       }
     </script>
   </body>
