@@ -6,8 +6,65 @@
     <title>Dogcare</title>
     <link rel="stylesheet" href="./dog-care.css" />
   </head>
+  <style>
+    /*Provisorisk styling, flyttes til stylesheet*/
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0px;
+      background-image: url("dogcare-assets/background.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    #dog-care-cards {
+      display: grid;
+      grid: 1fr 1fr/ 1fr 1fr;
+      place-content: center;
+      gap: 40px;
+      margin: 100px 150px;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .image-container {
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .card {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      grid-template-rows: repeat(3, auto);
+      place-content: center;
+      gap: 10px;
+      border: 2px solid rgb(220, 130, 200);
+      border-radius: 8px;
+      padding: 20px;
+      /* From https://css.glass */
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(15.6px);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+    }
+    .btn {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #show-new-cards-btn {
+      position: sticky;
+      top: 20px;
+      left: 20px;
+    }
+  </style>
   <body>
-    <header>
+        <header>
       <nav>
         <a href="./dating.html"
           ><div class="nav-div dating"><p>Dating</p></div></a
@@ -17,7 +74,10 @@
         >
       </nav>
     </header>
-    <main></main>
+    <main>
+      <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
+      <div id="dog-care-cards"></div>
+    </main>
     <footer>
       <img
         src="./dogcare-assets/test.jpg"
@@ -27,7 +87,103 @@
       />
     </footer>
     <script>
-      // Lager script her foreløpig så får vi heller flytte den senere :)
+      //Henter inn knapp og div til å vise kort i
+      let dogCareCards = document.getElementById("dog-care-cards");
+      const showNewCardsBtn = document.getElementById("show-new-cards-btn");
+      showNewCardsBtn.addEventListener("click", initializeDogsAndOwners);
+
+      let dogs = [];
+      let owners = [];
+
+      //Funksjon for å hente inn 10 random hunde bilder
+      async function getDogs() {
+        const dogsRequest = await fetch(
+          "https://dog.ceo/api/breeds/image/random/10"
+        );
+        const dogsResult = await dogsRequest.json();
+        return dogsResult.message;
+      }
+
+      //Funksjon for å hente inn navn, lokasjon og bilde for 10 random brukere
+      async function getOwners() {
+        const ownersRequest = await fetch(
+          "https://randomuser.me/api/?results=10&inc=name,location,picture"
+        );
+        const ownersResult = await ownersRequest.json();
+        return ownersResult.results;
+      }
+
+      //Funksjon for å legge inn date i globale variabler dogs og owners, samt error håndtering
+      async function initializeDogsAndOwners() {
+        try {
+          dogs = await getDogs();
+          owners = await getOwners();
+          displayDogsAndOwners();
+        } catch (error) {
+          console.error("Error med å laste innhold", error);
+        }
+      }
+
+      //Funksjon for å lage kort med data fra dogs og owners
+      function displayDogsAndOwners() {
+        const cards = owners
+          .slice(0, 10)
+          .map(
+            (owner, index) => `
+        <div class="card">
+          <div class="image-container">
+            <img src="${dogs[index]}" alt="hund">
+          </div>
+          <div class="image-container">
+            <img src="${owner.picture.large}" alt="eier">
+          </div>
+          <p>Eier: ${owner.name.first} ${owner.name.last}</p>
+          <p>Bosted: ${owner.location.city}, ${owner.location.country}</p>
+          <button id="delete-btn" class="btn" onclick="deleteCard(${index})">Slett</button>
+          <button id="chat-btn" class="btn">Chat</button>
+        </div>
+      `
+          )
+          .join("");
+
+        dogCareCards.innerHTML = cards;
+      }
+
+      //Funksjon for å hente inn nytt kort
+      async function getNewDogAndOwner() {
+        const newOwnerResult = await fetch("https://randomuser.me/api/");
+        const newOwner = await newOwnerResult.json();
+
+        const newDogResult = await fetch(
+          "https://dog.ceo/api/breeds/image/random"
+        );
+        const newDog = await newDogResult.json();
+
+        return {
+          dog: newDog.message,
+          owner: newOwner.results[0],
+        };
+      }
+
+      //Funksjon for å slette kort
+      async function deleteCard(index) {
+        dogs.splice(index, 1);
+        owners.splice(index, 1);
+
+        const { dog, owner } = await getNewDogAndOwner();
+
+        dogs.push(dog);
+        owners.push(owner);
+
+        displayDogsAndOwners();
+      }
+
+      //Funksjon for å laste inn nye kort
+      async function showNewCards() {
+        await initializeDogsAndOwners();
+      }
+
+      initializeDogsAndOwners();
 
       //oppgave 5.1
       const testBtn = document.getElementById("test-button");
