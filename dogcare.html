@@ -39,7 +39,7 @@
       grid-template-rows: repeat(3, auto);
       place-content: center;
       gap: 10px;
-      border: 2px solid rgb(220, 130, 200);
+      border: 2px solid rgb(255, 255, 255);
       border-radius: 8px;
       padding: 20px;
       /* From https://css.glass */
@@ -48,6 +48,7 @@
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(15.6px);
       border: 1px solid rgba(255, 255, 255, 0.55);
+      font-size: 14px;
     }
     .btn {
       padding: 10px;
@@ -59,12 +60,35 @@
     }
     #show-new-cards-btn {
       position: sticky;
-      top: 20px;
+      top: 5px;
       left: 20px;
     }
+    .dog-greeting-bubble {
+        position: absolute;
+        top: -10%;
+        left: 80%;
+        width: 20%; 
+        height: 10%; 
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+      }
+
+      .dog-icon {
+        margin-right: 10px;
+      }
+
+      .dog-icon img {
+        width: 20px;
+        height: 20px;
+      }
   </style>
   <body>
-        <header>
+    <header>
       <nav>
         <a href="./dating.html"
           ><div class="nav-div dating"><p>Dating</p></div></a
@@ -126,12 +150,11 @@
 
       //Funksjon for å lage kort med data fra dogs og owners
       function displayDogsAndOwners() {
-        let cards = ""
+        let cards = "";
         for (let index = 0; index < 10; index++) {
           const owner = owners[index];
           const dog = dogs[index];
-          cards += 
-          `
+          cards += `
         <div class="card">
           <div class="image-container">
             <img src="${dogs[index]}" alt="hund">
@@ -146,6 +169,12 @@
         </div>`;
         }
         dogCareCards.innerHTML = cards;
+
+        // Event listener for hvert kort til dogGreeting
+        const cardElements = document.querySelectorAll(".card");
+        cardElements.forEach((card, index) => {
+          card.addEventListener("click", () => dogGreeting(card));
+        });
       }
 
       //Funksjon for å hente inn nytt kort
@@ -193,8 +222,36 @@
       function chatBox() {
         chatBoxOpen = true;
         console.log(chatBoxOpen);
-        console.log("Test 2")
-        
+        console.log("Test 2");
+      }
+
+      //OPPGAVE 6 - funksjon for å lage snakkeboble når bruker trykker på kortet
+
+      const dogSounds = [
+        "Voff voff",
+        "Grrr!",
+        "Mjau??",
+        "Voff!",
+        "Voff voff voff",
+        "WRAFF!!!",
+      ];
+      function dogGreeting(card) {
+        const existingBubble = card.querySelector(".dog-greeting-bubble");
+        if (existingBubble) {
+          existingBubble.remove();
+        }
+
+        const dogGreetingBubble = document.createElement("div");
+        dogGreetingBubble.classList.add("dog-greeting-bubble");
+        dogGreetingBubble.innerHTML = `
+        <div class="dog-icon">
+          <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
+        </div>
+        <div class="dog-greeting-text">
+          <p>${dogSounds[Math.floor(Math.random() * dogSounds.length)]}</p>
+        </div>
+        `;
+        card.appendChild(dogGreetingBubble);
       }
     </script>
   </body>
