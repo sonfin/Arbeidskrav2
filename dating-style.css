@@ -1,30 +1,33 @@
 * {
-  border: 0;
-  padding: 0;
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
+
 nav {
   display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px 10%;
 }
+
 a {
-  width: 100vw;
   text-decoration: none;
-  color: black;
+  color: #24252a;
+  transition: color 0.3s ease 0s;
+  margin: 0 60px;
 }
+
+a:hover {
+  color: #a68582;
+  border-bottom: 2px solid #a68582;
+}
+
 .nav-div {
-  height: 50px;
-  width: 100%;
+  flex: 1;
   text-align: center;
-  align-items: center;
-}
-.dating {
-  background-color: pink;
-}
-.nav-div:hover {
-  opacity: 90%;
-}
-.dog-care {
-  background-color: green;
+  padding: 10px;
 }
 
 body {
