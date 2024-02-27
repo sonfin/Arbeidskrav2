@@ -236,10 +236,6 @@
         "WRAFF!!!",
       ];
       function dogGreeting(card) {
-        if (event.target.id === "delete-btn" || event.target.id === "chat-btn") { //gjør at funksjonen stopper hvis bruker klikker på sletteknappen og chatknappen
-          return;
-        }
-
         const existingBubble = card.querySelector(".dog-greeting-bubble");
         if (existingBubble) {
           existingBubble.remove();
@@ -256,13 +252,6 @@
         </div>
         `;
         card.appendChild(dogGreetingBubble);
-
-        if (dogGreetingBubble) {
-          dogGreetingBubble.addEventListener("click", (event) => {
-            event.stopPropagation(); // gjør at dogGreetingCard ikke trigges igjen https://www.w3schools.com/jsref/event_stoppropagation.asp
-            dogGreetingBubble.remove();
-          });
-        }
       }
     </script>
   </body>
