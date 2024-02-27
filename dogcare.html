@@ -63,8 +63,33 @@
     }
   </style>
   <body>
+<<<<<<< Updated upstream
     <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
     <div id="dog-care-cards"></div>
+=======
+    <header>
+      <nav>
+        <a href="./dating.html"
+          ><div class="nav-div dating"><p>Dating</p></div></a
+        >
+        <a href="./dogcare.html"
+          ><div class="nav-div dog-care"><p>Dog-care</p></div></a
+        >
+      </nav>
+    </header>
+    <main>
+      <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
+      <div id="dog-care-cards"></div>
+    </main>
+    <footer>
+      <img
+        src="./dogcare-assets/test.jpg"
+        alt="Testknapp"
+        class="test-img"
+        id="test-button"
+      />
+    </footer>
+>>>>>>> Stashed changes
     <script>
       //Henter inn knapp og div til å vise kort i
       let dogCareCards = document.getElementById("dog-care-cards");
@@ -105,12 +130,20 @@
 
       //Funksjon for å lage kort med data fra dogs og owners
       function displayDogsAndOwners() {
+<<<<<<< Updated upstream
         let cards = ""
         for (let index = 0; index < 10; index++) {
           const owner = owners[index];
           const dog = dogs[index];
           cards += 
           `
+=======
+        let cards = "";
+        for (let index = 0; index < 10; index++) {
+          const owner = owners[index];
+          const dog = dogs[index];
+          cards += `
+>>>>>>> Stashed changes
         <div class="card">
           <div class="image-container">
             <img src="${dogs[index]}" alt="hund">
@@ -162,6 +195,21 @@
       }
 
       initializeDogsAndOwners();
+<<<<<<< Updated upstream
+=======
+
+      //oppgave 5.1
+      const testBtn = document.getElementById("test-button");
+      let chatBoxOpen = false;
+
+      testBtn.onclick = chatBox;
+
+      function chatBox() {
+        chatBoxOpen = true;
+        console.log(chatBoxOpen);
+        console.log("Test 2");
+      }
+>>>>>>> Stashed changes
     </script>
   </body>
 </html>
