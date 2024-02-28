@@ -164,17 +164,22 @@
       const chatTextInput = document.querySelector(".chat-text-input");
       const ownerLocation = document.getElementById("owner-location");
       let chatOpen = false;
+      let firstText = true;
 
       closeBtn.onclick = closeChat;
 
+      // Funksjon for å åpne chat
       function chatBox(index) {
+        if (chatOpen) {
+          console.log("Chat er åpen fra før.");
+          return;
+        }
         const owner = owners[index];
         const dog = dogs[index];
         chatOpen = true;
         const chatDiv = document.querySelector(".chat-box");
         chatDiv.style.display = "flex";
         introMessage(owner.name.first);
-
         ownerImg.src = owner.picture.large;
         ownerImg.alt = "eier";
         ownerName.innerHTML = `${owner.name.first} ${owner.name.last}`;
@@ -192,32 +197,39 @@
           });
         }
       }
-
+      // Funksjon for å lukke chat.
       function closeChat() {
         chatOpen = false;
         const chatDiv = document.querySelector(".chat-box");
         chatDiv.style.display = "none";
+        firstText = true;
+        clearChat();
       }
+      // Funksjon for å motta første melding fra Eier
       function introMessage(navn) {
-        const firstMessages = [
-          ", og min trofaste følgesvenn er Charlie. Han er en nysgjerrig dachshund som alltid har nesen sin i alt!",
-          ", og min livlige venn er Luna. En leken border collie som elsker å hente ball og imponere med triks!",
-          "! Min firbente venn, Rocky, er en sterk og kjærlig bernese mountain dog. Han er like god som en kosebamse!",
-          ", og min energibunt er Max, en glad golden retriever som sprer glede med hvert labbetrykk!",
-          ", og min pelskledde venn er Daisy. Hun er en kjærlig bichon frise som alltid får folk til å smile!",
-          ", og min lille kompis er Bella, en lekfull chihuahua med et stort hjerte til tross for sin lille størrelse!",
-          ", og min trofaste følgesvenn er Milo. Han er en eventyrlysten shiba inu som elsker å utforske verden rundt seg!",
-          ", og min beste venn er Coco, en sjarmerende fransk bulldog som alltid stjeler oppmerksomheten med sitt uttrykksfulle ansikt!",
-          "! Min firbente kamerat er Bella, en leken labrador retriever som er like glad i lek som i godbiter!",
-          "! Min lojale venn er Rocky, en robust rottweiler med et mykt hjerte. Han er den beste vaktbikkjen med en kjærlig side!",
-        ];
-        const randomFirstMessage =
-          firstMessages[Math.floor(Math.random() * firstMessages.length)];
-        showMessages(
-          `Hei, jeg heter ${navn}${randomFirstMessage}`,
-          "received"
-        );
+        if (firstText === true) {
+          const firstMessages = [
+            ", og min trofaste følgesvenn er Charlie. Han er en nysgjerrig dachshund som alltid har nesen sin i alt!",
+            ", og min livlige venn er Luna. En leken border collie som elsker å hente ball og imponere med triks!",
+            "! Min firbente venn, Rocky, er en sterk og kjærlig bernese mountain dog. Han er like god som en kosebamse!",
+            ", og min energibunt er Max, en glad golden retriever som sprer glede med hvert labbetrykk!",
+            ", og min pelskledde venn er Daisy. Hun er en kjærlig bichon frise som alltid får folk til å smile!",
+            ", og min lille kompis er Bella, en lekfull chihuahua med et stort hjerte til tross for sin lille størrelse!",
+            ", og min trofaste følgesvenn er Milo. Han er en eventyrlysten shiba inu som elsker å utforske verden rundt seg!",
+            ", og min beste venn er Coco, en sjarmerende fransk bulldog som alltid stjeler oppmerksomheten med sitt uttrykksfulle ansikt!",
+            "! Min firbente kamerat er Bella, en leken labrador retriever som er like glad i lek som i godbiter!",
+            "! Min lojale venn er Rocky, en robust rottweiler med et mykt hjerte. Han er den beste vaktbikkjen med en kjærlig side!",
+          ];
+          const randomFirstMessage =
+            firstMessages[Math.floor(Math.random() * firstMessages.length)];
+          showMessages(
+            `Hei, jeg heter ${navn}${randomFirstMessage}`,
+            "received"
+          );
+        }
+        firstText = false;
       }
+      // Funksjon for å sende melding
       function sendMessage() {
         const message = chatTextInput.value;
         if (message !== "") {
@@ -227,7 +239,7 @@
           }, 1000);
         }
       }
-
+      // Funksjon for å få et tilfeldig svar på melding
       function promptResponse() {
         const ownerResponses = [
           "Hunden min er en glede å ha rundt! Han sprer alltid positiv energi og elsker å leke i hagen.",
@@ -243,7 +255,14 @@
           ownerResponses[Math.floor(Math.random() * ownerResponses.length)];
         showMessages(randomResponse, "received");
       }
-
+      // Funksjon for å tømme chatten for Meldinger
+      function clearChat() {
+        const chatMessages = document.querySelector(".chat-messages");
+        while (chatMessages.firstChild) {
+          chatMessages.removeChild(chatMessages.firstChild);
+        }
+      }
+      // Funksjon for å vise fram meldinger
       function showMessages(message, type) {
         const chatMessages = document.querySelector(".chat-messages");
         const messageDiv = document.createElement("div");
@@ -252,6 +271,7 @@
         chatMessages.appendChild(messageDiv);
         scrollDown();
       }
+      // Funksjon for å scrolle automatisk når det vises en ny melding
       function scrollDown() {
         const chatMessages = document.querySelector(".chat-messages");
         chatMessages.scrollTop = chatMessages.scrollHeight;

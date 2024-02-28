@@ -156,9 +156,8 @@ nav {
 }
 .owner-info {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-120%, -50%);
+  top: 20%;
+  left: 15%;
   text-align: left;
 }
 /* Her må jeg fikse img sizing. Så det ikke strekkes... */
