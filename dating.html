@@ -85,7 +85,27 @@ function display(profile) {
 
 }
 
+//Funksjon for å bytte ut kortet med en ny profil
+function swipeleft() {
+    fetchRandomProfile();
+}
 
+//Funksjon for å legge til profilen i likte profiler
+function swipeRight(profile) {
+    likedProfiles.push(profile);
+    localStorage.setItem('likesProfiles', JSON.stringify(likedProfiles));
+    score--;
+    updateScoreDisplay();
+
+    //Hvis brukeren har nådd maksimalt antall likte profiler
+    if (likedProfiles.lenght > 10) {
+        alert('Du har likt for mange profiler.Vennligst slett noen profiler fra oversikten.');
+
+    }
+    //Hent og vis tilfeldig profil
+    fetchRandomProfile();
+    
+}
         </script>
 </body>
 
