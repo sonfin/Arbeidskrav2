@@ -65,9 +65,9 @@
             }
 
     //Funksjon for å hente og vise tilfeldig profil
-function fetchRandomProfile(gender = '') {
+async function fetchRandomProfile() {
     const genderParam = gender ? `&gender=${gender}` : '';
-    frych(`https://randomuser.me/api/?results=1${genderParam}`)
+    fetch("https://randomuser.me/api/")
     .then(response => respons.json())
     .then(data => {
         const profile = data.results[0];
