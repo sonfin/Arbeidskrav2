@@ -99,8 +99,44 @@
       </nav>
     </header>
     <main>
+
+      
+
       <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
       <div id="dog-care-cards"></div>
+    
+
+      <div class="chat-box">
+        <div class="chat-name">
+          <div class="img-div">
+            <img
+              src="./dogcare-assets/profile-photo.jpg"
+              alt="Profilbilde"
+              id="owner-picture"
+            />
+          </div>
+          <div class="owner-info">
+            <h1 id="owner-name">Test for styling</h1>
+            <h2 id="owner-location">Chicago, Illinois</h2>
+          </div>
+          <img
+            src="./dogcare-assets/close.png"
+            alt="close chat button"
+            id="close-button"
+          />
+        </div>
+        <div class="chat-messages">
+          <!-- <div class="messages"></div> -->
+        </div>
+        <div class="chat-text-section">
+          <input
+            type="text"
+            placeholder="Skriv melding...."
+            class="chat-text-input"
+          />
+          <input type="button" value="Send" class="chat-send-button" />
+        </div>
+      </div>
     </main>
     <footer>
       <img
@@ -215,14 +251,101 @@
 
       //oppgave 5.1
       const testBtn = document.getElementById("test-button");
-      let chatBoxOpen = false;
+      const closeBtn = document.getElementById("close-button");
+      const ownerImg = document.getElementById("owner-picture");
+      const ownerName = document.getElementById("owner-name");
+      const chatTextInput = document.querySelector(".chat-text-input");
+      const ownerLocation = document.getElementById("owner-location");
+      let chatOpen = false;
 
       testBtn.onclick = chatBox;
-
+      closeBtn.onclick = closeChat;
+      // Må gjøre om for å hente ut riktig eier sin info, basert på hvilket kort man trykker på.
       function chatBox() {
-        chatBoxOpen = true;
-        console.log(chatBoxOpen);
-        console.log("Test 2");
+        chatOpen = true;
+        const chatDiv = document.querySelector(".chat-box");
+        chatDiv.style.display = "flex";
+        introMessage();
+        /* ownerImg.src = owner.picture.large;
+              ownerImg.alt = "eier";
+              ownerName.innerHTML = `${owner.name.first} ${owner.name.last}`;
+              ownerLocation.innerHTML = `${owner.location.city}, ${owner.location.state}`; */
+
+        if (chatOpen === true) {
+          const chatSendBtn = document.querySelector(".chat-send-button");
+          chatTextInput.focus();
+          chatSendBtn.addEventListener("click", sendMessage);
+          chatTextInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              sendMessage();
+              chatTextInput.value = "";
+            }
+          });
+        }
+      }
+
+      function closeChat() {
+        chatOpen = false;
+        const chatDiv = document.querySelector(".chat-box");
+        chatDiv.style.display = "none";
+      }
+      function introMessage() {
+        const firstMessages = [
+          ", og min trofaste følgesvenn er Charlie. Han er en nysgjerrig dachshund som alltid har nesen sin i alt!",
+          ", og min livlige venn er Luna. En leken border collie som elsker å hente ball og imponere med triks!",
+          "! Min firbente venn, Rocky, er en sterk og kjærlig bernese mountain dog. Han er like god som en kosebamse!",
+          ", og min energibunt er Max, en glad golden retriever som sprer glede med hvert labbetrykk!",
+          ", og min pelskledde venn er Daisy. Hun er en kjærlig bichon frise som alltid får folk til å smile!",
+          ", og min lille kompis er Bella, en lekfull chihuahua med et stort hjerte til tross for sin lille størrelse!",
+          ", og min trofaste følgesvenn er Milo. Han er en eventyrlysten shiba inu som elsker å utforske verden rundt seg!",
+          ", og min beste venn er Coco, en sjarmerende fransk bulldog som alltid stjeler oppmerksomheten med sitt uttrykksfulle ansikt!",
+          "! Min firbente kamerat er Bella, en leken labrador retriever som er like glad i lek som i godbiter!",
+          "! Min lojale venn er Rocky, en robust rottweiler med et mykt hjerte. Han er den beste vaktbikkjen med en kjærlig side!",
+        ];
+        const randomFirstMessage =
+          firstMessages[Math.floor(Math.random() * firstMessages.length)];
+        showMessages(
+          `Hei, jeg heter ${owner.name.first}${randomFirstMessage}`,
+          "received"
+        );
+      }
+      function sendMessage() {
+        const message = chatTextInput.value;
+        if (message !== "") {
+          showMessages(message, "sent");
+          setTimeout(() => {
+            promptResponse();
+          }, 1000);
+        }
+      }
+
+      function promptResponse() {
+        const ownerResponses = [
+          "Hunden min er en glede å ha rundt! Han sprer alltid positiv energi og elsker å leke i hagen.",
+          "Favoritt triks? Han har virkelig mestret high-five, og vi jobber med å lære ham å rulle over. Det er alltid gøy å se ham i aksjon!",
+          "For helgen planlegger vi lange turer i naturen, der han kan utforske og nyte frisk luft. Etterpå blir det avslapping og kos for både ham og meg.",
+          "Når det gjelder filmer, virker det som om han virkelig liker 'Potedåren.' Jeg tror det er alle de morsomme dyrene som fanger oppmerksomheten hans!",
+          "I treningsøktene våre har han virkelig fått taket på å sitte og bli. Han er også en ekspert på å motta godbiter med stil! Det er så gøy å se fremgangen hans.",
+          "Når det gjelder snacks, er han ikke veldig kresen. Han er mer som en gourmet og liker å prøve forskjellige ting. Noen ganger tror jeg han er en liten matkritiker!",
+          "Når postmannen kommer, tror jeg han tror han er en superhelt som må forsvare huset. Bjeffingen er på et ekspertnivå, og han vifter med halen som om han er veldig stolt av innsatsen sin!",
+          "Det siste eventyret vårt var en tur til parken, der han ble helt besatt av å jakte på ekkorn. Han hoppet og sprang rundt, og det var så herlig å se hvor glad han var!",
+        ];
+        const randomResponse =
+          ownerResponses[Math.floor(Math.random() * ownerResponses.length)];
+        showMessages(randomResponse, "received");
+      }
+
+      function showMessages(message, type) {
+        const chatMessages = document.querySelector(".chat-messages");
+        const messageDiv = document.createElement("div");
+        messageDiv.textContent = message;
+        messageDiv.className = "message " + type;
+        chatMessages.appendChild(messageDiv);
+        scrollDown();
+      }
+      function scrollDown() {
+        const chatMessages = document.querySelector(".chat-messages");
+        chatMessages.scrollTop = chatMessages.scrollHeight;
       }
 
       //OPPGAVE 6 - funksjon for å lage snakkeboble når bruker trykker på kortet
