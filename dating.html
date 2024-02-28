@@ -65,9 +65,9 @@
             }
 
     //Funksjon for å hente og vise tilfeldig profil
-function fetchRandomProfile(gender = '') {
+async function fetchRandomProfile() {
     const genderParam = gender ? `&gender=${gender}` : '';
-    frych(`https://randomuser.me/api/?results=1${genderParam}`)
+    fetch("https://randomuser.me/api/")
     .then(response => respons.json())
     .then(data => {
         const profile = data.results[0];
@@ -106,6 +106,55 @@ function swipeRight(profile) {
     fetchRandomProfile();
     
 }
+// Funksjon for å vise likte profiler
+function renderLikedProfiles() {
+    const likedProfilesList = document.getElementById('liked-profiles-list');
+    likedProfilesList.innerHTML = ''; //tøm listen før oppdatering
+    likedProfiles.forEach(profile => {
+        const li = document.createElement('li');
+        li.textContent = `${profile.name.first} ${profile.name.last}`;
+        //sletteknapp
+        const deleteButton = document.createElement('button');
+        deleteButton.addEventListener('click', () => deleteProfile(profile));
+        li.appendChild(deleteButton);
+        likedProfilesList.appendChild(li);
+
+    });
+
+
+}
+
+//Slette profil fra likte profiler
+function deleteProfile(profile) {
+    const index = likesProfiles.indexOf(profile);
+    if (index !== -1) {
+        likedProfiles.splice(index, 1);
+        localStorage.setItem('likedProfiles', JSON(likedProfiles));
+        renderLikedProfiles();
+        
+    }
+}
+
+// Lyttere for tastatur
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+        swipeLeft();
+    
+    } else if (event.key === 'ArrowRight') {
+        swipeRight(profiles[0]); //?
+    
+    }
+})
+
+// Lyttere for filtreringsknapper
+document.getElementById('kvinner.btn').addEventListener('click', () => fetchRandomProfile('female'))
+document.getElementById('menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
+document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile());
+
+// Hent en tilfeldig profil når siden lastes
+fetchRandomProfile();
+
+
         </script>
 </body>
 
