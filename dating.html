@@ -53,7 +53,109 @@
 
         </div>
 
-        <script></script>
+        <script>
+            // score og liked profiles
+            let score = 10; 
+            let likerProfiles = [];
+           
+            //Funksjon som oppdaterer visning av scoret
+            function updateSoreDisplay() {
+                const scoreDisplay = document.getElementById('score');
+                scoreDisplay.textContent = score; 
+            }
+
+    //Funksjon for å hente og vise tilfeldig profil
+async function fetchRandomProfile() {
+    const genderParam = gender ? `&gender=${gender}` : '';
+    fetch("https://randomuser.me/api/")
+    .then(response => respons.json())
+    .then(data => {
+        const profile = data.results[0];
+        displayProfile(profile);
+
+    })
+    .catch(error => console.error('Error fetching random profile:', error));
+}
+//Funksjon for å vise profilen i kortet
+function display(profile) {
+    const profileCard = document.querySelector('.dating-card');
+    profileCard.querySelector('img').src = profile.picture.large;
+    profileCard.querySelector('#navn').textContent =  `${profile.name.first} ${profile.name.last}`;
+    profileCard.querySelector('#bosted').textcontent = `${profile.location.city}, ${profile.location.Country}`;
+
+}
+
+//Funksjon for å bytte ut kortet med en ny profil
+function swipeleft() {
+    fetchRandomProfile();
+}
+
+//Funksjon for å legge til profilen i likte profiler
+function swipeRight(profile) {
+    likedProfiles.push(profile);
+    localStorage.setItem('likesProfiles', JSON.stringify(likedProfiles));
+    score--;
+    updateScoreDisplay();
+
+    //Hvis brukeren har nådd maksimalt antall likte profiler
+    if (likedProfiles.lenght > 10) {
+        alert('Du har likt for mange profiler.Vennligst slett noen profiler fra oversikten.');
+
+    }
+    //Hent og vis tilfeldig profil
+    fetchRandomProfile();
+    
+}
+// Funksjon for å vise likte profiler
+function renderLikedProfiles() {
+    const likedProfilesList = document.getElementById('liked-profiles-list');
+    likedProfilesList.innerHTML = ''; //tøm listen før oppdatering
+    likedProfiles.forEach(profile => {
+        const li = document.createElement('li');
+        li.textContent = `${profile.name.first} ${profile.name.last}`;
+        //sletteknapp
+        const deleteButton = document.createElement('button');
+        deleteButton.addEventListener('click', () => deleteProfile(profile));
+        li.appendChild(deleteButton);
+        likedProfilesList.appendChild(li);
+
+    });
+
+
+}
+
+//Slette profil fra likte profiler
+function deleteProfile(profile) {
+    const index = likesProfiles.indexOf(profile);
+    if (index !== -1) {
+        likedProfiles.splice(index, 1);
+        localStorage.setItem('likedProfiles', JSON(likedProfiles));
+        renderLikedProfiles();
+        
+    }
+}
+
+// Lyttere for tastatur
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+        swipeLeft();
+    
+    } else if (event.key === 'ArrowRight') {
+        swipeRight(profiles[0]); //?
+    
+    }
+})
+
+// Lyttere for filtreringsknapper
+document.getElementById('kvinner.btn').addEventListener('click', () => fetchRandomProfile('female'))
+document.getElementById('menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
+document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile());
+
+// Hent en tilfeldig profil når siden lastes
+fetchRandomProfile();
+
+
+        </script>
 </body>
 
 </html>
