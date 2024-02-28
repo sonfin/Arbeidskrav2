@@ -19,6 +19,8 @@
     </header>
     <main>
       <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
+      <button id="open-breeds-menu" class="btn">⬅️ Hent hunderaser</button>
+      <button id="" class="btn">Test</button>
       <div id="dog-care-cards"></div>
 
       <div class="chat-box">
@@ -58,6 +60,8 @@
 
       let dogs = [];
       let owners = [];
+      let breeds = [];
+      let breedsArray = [];
 
       //Funksjon for å hente inn 10 random hunde bilder
       async function getDogs() {
@@ -66,6 +70,14 @@
         );
         const dogsResult = await dogsRequest.json();
         return dogsResult.message;
+      }
+
+      //Funksjon for å hente inn alle hunderasene
+      async function getBreeds() {
+        const breedRequest = await fetch("https://dog.ceo/api/breeds/list/all");
+
+        const breedResult = await breedRequest.json();
+        return breedResult.message;
       }
 
       //Funksjon for å hente inn navn, lokasjon og bilde for 10 random brukere
@@ -77,11 +89,13 @@
         return ownersResult.results;
       }
 
-      //Funksjon for å legge inn date i globale variabler dogs og owners, samt error håndtering
+      //Funksjon for å legge inn date i globale variabler breeds, dogs og owners, samt error håndtering
       async function initializeDogsAndOwners() {
         try {
           dogs = await getDogs();
           owners = await getOwners();
+          breeds = await getBreeds();
+          breedsArray = Object.keys(breeds);
           displayDogsAndOwners();
         } catch (error) {
           console.error("Error med å laste innhold", error);
@@ -153,6 +167,32 @@
       }
 
       initializeDogsAndOwners();
+
+      // Oppgave 4
+
+      const openMenu = document.getElementById("open-breeds-menu");
+      openMenu.onclick = toggleMenu;
+
+      function toggleMenu() {
+        // Hente ut 5 tilfeldige hunderaser
+        for (let i = 0; i < 5; i++) {
+          const randomNumber =
+            Math.floor(Math.random() * breedsArray.length) + 0;
+          console.log(breedsArray[randomNumber]);
+        }
+
+        /* const menu = document.createElement("button");
+        document.main.appendChild(menu);
+
+        for (let i = 0; i < itemArray.length; i++) {
+          let listElement = document.createElement("li");
+
+          listElement.style.backgroundColor =
+            itemArray[i].status == "pakket" ? "green" : "yellow";
+          listElement.innerHTML = itemArray[i].name;
+          document.body.appendChild(listElement);
+        } */
+      }
 
       //oppgave 5.1
       const closeBtn = document.getElementById("close-button");

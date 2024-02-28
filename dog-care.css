@@ -98,7 +98,12 @@ nav {
   position: sticky;
   top: 100px;
   left: 20px;
-  
+}
+#open-breeds-menu {
+  position: sticky;
+  top: 100px;
+  float: right;
+  right: 20px;
 }
 .dog-greeting-bubble {
   position: absolute;
