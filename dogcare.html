@@ -106,8 +106,8 @@
           <div class="image-container">
             <img src="${owner.picture.large}" alt="eier">
           </div>
-          <p>Eier: ${owner.name.first} ${owner.name.last}</p>
-          <p>Bosted: ${owner.location.city}, ${owner.location.state}</p>
+          <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
+          <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
           <button id="delete-btn" class="btn" onclick="deleteCard(${index})">✖ Slett</button>
           <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
         </div>`;
@@ -150,7 +150,8 @@
         displayDogsAndOwners();
       }
 
-      //Funksjon for å laste inn nye kort
+      //Funksjon for å laste inn/fetche data til det nye kortet.
+      //Usikker på om vi trenger dette..
       async function showNewCards() {
         await initializeDogsAndOwners();
       }
