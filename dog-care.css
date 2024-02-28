@@ -225,6 +225,7 @@ nav {
   color: white;
   outline: none;
   padding-left: 10px;
+  border: none;
 }
 .chat-send-button {
   color: white;
