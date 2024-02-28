@@ -181,10 +181,6 @@ body {
 }
 /* footer styling */
 
-.test-img {
-  width: 100px;
-}
-
 #dog-care-cards {
   display: grid;
   grid: 1fr 1fr/ 1fr 1fr;

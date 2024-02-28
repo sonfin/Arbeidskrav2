@@ -99,12 +99,8 @@
       </nav>
     </header>
     <main>
-
-      
-
       <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
       <div id="dog-care-cards"></div>
-    
 
       <div class="chat-box">
         <div class="chat-name">
@@ -138,14 +134,7 @@
         </div>
       </div>
     </main>
-    <footer>
-      <img
-        src="./dogcare-assets/test.jpg"
-        alt="Testknapp"
-        class="test-img"
-        id="test-button"
-      />
-    </footer>
+    <footer></footer>
     <script>
       //Henter inn knapp og div til å vise kort i
       let dogCareCards = document.getElementById("dog-care-cards");
@@ -201,7 +190,7 @@
           <p>Eier: ${owner.name.first} ${owner.name.last}</p>
           <p>Bosted: ${owner.location.city}, ${owner.location.country}</p>
           <button id="delete-btn" class="btn" onclick="deleteCard(${index})">Slett</button>
-          <button id="chat-btn" class="btn">Chat</button>
+          <button id="chat-btn" class="btn" onclick="chatBox(${index})">Chat</button>
         </div>`;
         }
         dogCareCards.innerHTML = cards;
@@ -250,7 +239,6 @@
       initializeDogsAndOwners();
 
       //oppgave 5.1
-      const testBtn = document.getElementById("test-button");
       const closeBtn = document.getElementById("close-button");
       const ownerImg = document.getElementById("owner-picture");
       const ownerName = document.getElementById("owner-name");
@@ -258,18 +246,20 @@
       const ownerLocation = document.getElementById("owner-location");
       let chatOpen = false;
 
-      testBtn.onclick = chatBox;
       closeBtn.onclick = closeChat;
-      // Må gjøre om for å hente ut riktig eier sin info, basert på hvilket kort man trykker på.
-      function chatBox() {
+
+      function chatBox(index) {
+        const owner = owners[index];
+        const dog = dogs[index];
         chatOpen = true;
         const chatDiv = document.querySelector(".chat-box");
         chatDiv.style.display = "flex";
-        introMessage();
-        /* ownerImg.src = owner.picture.large;
-              ownerImg.alt = "eier";
-              ownerName.innerHTML = `${owner.name.first} ${owner.name.last}`;
-              ownerLocation.innerHTML = `${owner.location.city}, ${owner.location.state}`; */
+        introMessage(owner.name.first);
+
+        ownerImg.src = owner.picture.large;
+        ownerImg.alt = "eier";
+        ownerName.innerHTML = `${owner.name.first} ${owner.name.last}`;
+        ownerLocation.innerHTML = `${owner.location.city}, ${owner.location.state}`;
 
         if (chatOpen === true) {
           const chatSendBtn = document.querySelector(".chat-send-button");
@@ -289,7 +279,7 @@
         const chatDiv = document.querySelector(".chat-box");
         chatDiv.style.display = "none";
       }
-      function introMessage() {
+      function introMessage(navn) {
         const firstMessages = [
           ", og min trofaste følgesvenn er Charlie. Han er en nysgjerrig dachshund som alltid har nesen sin i alt!",
           ", og min livlige venn er Luna. En leken border collie som elsker å hente ball og imponere med triks!",
@@ -305,7 +295,7 @@
         const randomFirstMessage =
           firstMessages[Math.floor(Math.random() * firstMessages.length)];
         showMessages(
-          `Hei, jeg heter TEST ${randomFirstMessage}`,
+          `Hei, jeg heter ${navn}${randomFirstMessage}`,
           "received"
         );
       }
@@ -359,7 +349,11 @@
         "WRAFF!!!",
       ];
       function dogGreeting(card) {
-        if (event.target.id === "delete-btn" || event.target.id === "chat-btn") { //gjør at funksjonen stopper hvis bruker klikker på sletteknappen og chatknappen
+        if (
+          event.target.id === "delete-btn" ||
+          event.target.id === "chat-btn"
+        ) {
+          //gjør at funksjonen stopper hvis bruker klikker på sletteknappen og chatknappen
           return;
         }
 
@@ -387,7 +381,6 @@
           });
         }
       }
-
     </script>
   </body>
 </html>
