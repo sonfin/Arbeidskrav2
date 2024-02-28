@@ -21,7 +21,7 @@ a {
 
 a:hover {
   color: #a68582;
-  border-bottom: 2px solid #a68582;
+  text-decoration: underline #a68582;
 }
 
 .nav-div {

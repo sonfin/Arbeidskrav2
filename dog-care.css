@@ -1,18 +1,20 @@
 /* Universal styling */
 
 * {
-  border: 0;
-  padding: 0;
+  box-sizing: border-box;
   margin: 0;
-}
-
-nav {
-  display: flex;
+  padding: 0;
 }
 a {
-  width: 100vw;
   text-decoration: none;
-  color: black;
+  color: #24252a;
+  transition: color 0.3s ease 0s;
+  margin: 0 60px;
+}
+
+a:hover {
+  color: #a68582;
+  text-decoration: underline #a68582;
 }
 body {
   font-family: Arial, sans-serif;
@@ -22,31 +24,18 @@ body {
   background-size: cover;
 }
 /* nav bar styling */
-.nav-div {
-  height: 50px;
-  width: 100%;
+nav {
   display: flex;
-  text-align: center;
-  align-items: center;
   justify-content: center;
-  height: 150px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px 10%;
 }
-.dating {
-  background-color: rgba(255, 192, 203, 0.5);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(15.6px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  font-size: 30px;
-}
-.nav-div:hover {
-  opacity: 90%;
-}
-.dog-care {
-  background-color: rgba(0, 128, 0, 0.5);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(15.6px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  font-size: 30px;
+.nav-div {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  text-transform: uppercase;
 }
 
 .main-container {
@@ -58,7 +47,7 @@ body {
   overflow: hidden;
 }
 
-/* main styling */
+/* cards styling */
 #dog-care-cards {
   display: grid;
   grid: 1fr 1fr/ 1fr 1fr;
@@ -91,7 +80,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(15.6px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid rgb(255, 255, 255);
   font-size: 14px;
 }
 .btn {
@@ -104,15 +93,15 @@ body {
 }
 #show-new-cards-btn {
   position: sticky;
-  top: 5px;
+  top: 100px;
   left: 20px;
 }
 .dog-greeting-bubble {
   position: absolute;
   top: -10%;
   left: 80%;
-  width: 20%;
-  height: 10%;
+  width: 25%;
+  height: 15%;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   padding: 10px;
@@ -121,14 +110,13 @@ body {
   align-items: center;
   font-size: 13px;
 }
-
 .dog-icon {
   margin-right: 10px;
 }
 
 .dog-icon img {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 /* chat box styling */
@@ -168,9 +156,8 @@ body {
 }
 .owner-info {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-120%, -50%);
+  top: 20%;
+  left: 15%;
   text-align: left;
 }
 /* Her må jeg fikse img sizing. Så det ikke strekkes... */
