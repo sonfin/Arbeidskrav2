@@ -21,17 +21,41 @@ a {
 .nav-div {
   height: 50px;
   width: 100%;
+  display: flex;
   text-align: center;
   align-items: center;
+  justify-content: center;
+  height: 150px;
 }
 .dating {
-  background-color: pink;
+  background-color: pink, 0.5;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(15.6px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  font-size: 30px;
 }
 .nav-div:hover {
   opacity: 90%;
 }
 .dog-care {
-  background-color: green;
+  background-color: green, 0.5;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(15.6px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  font-size: 30px;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0px;
+}
+
+.main-container {
+  width: 100%;
+  height: 100vh;
+  background-image: url("dating-assets/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
 }
 
 /* main styling */
@@ -159,4 +183,42 @@ a {
 
 .test-img {
   width: 100px;
+}
+
+#dog-care-cards {
+  display: grid;
+  grid: 1fr 1fr/ 1fr 1fr;
+  place-content: center;
+  gap: 40px;
+  margin: 100px 300px;
+}
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.card {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(3, auto);
+  place-content: center;
+  gap: 10px;
+  border: 2px solid rgb(220, 130, 200);
+  border-radius: 8px;
+  padding: 10px;
+}
+.btn {
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
