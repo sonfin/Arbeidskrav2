@@ -106,6 +106,35 @@ function swipeRight(profile) {
     fetchRandomProfile();
     
 }
+// Funksjon for å vise likte profiler
+function renderLikedProfiles() {
+    const likedProfilesList = document.getElementById('liked-profiles-list');
+    likedProfilesList.innerHTML = ''; //tøm listen før oppdatering
+    likedProfiles.forEach(profile => {
+        const li = document.createElement('li');
+        li.textContent = `${profile.name.first} ${profile.name.last}`;
+        //sletteknapp
+        const deleteButton = document.createElement('button');
+        deleteButton.addEventListener('click', () => deleteProfile(profile));
+        li.appendChild(deleteButton);
+        likedProfilesList.appendChild(li);
+
+    });
+
+
+}
+
+//Slette profil fra likte profiler
+function deleteProfile(profile) {
+    const index = likesProfiles.indexOf(profile);
+    if (index !== -1) {
+        likedProfiles.splice(index, 1);
+        localStorage.setItem('likedProfiles', JSON,stringify(likedProfiles));
+        renderLikedProfiles();
+        
+    }
+}
+
         </script>
 </body>
 
