@@ -63,8 +63,21 @@
                 const scoreDisplay = document.getElementById('score');
                 scoreDisplay.textContent = score; 
             }
-            
-    
+
+    //Funksjon for å hente og vise tilfeldig profil
+function fetchRandomProfile(gender = '') {
+    const genderParam = gender ? `&gender=${gender}` : '';
+    frych(`https://randomuser.me/api/?results=1${genderParam}`)
+    .then(response => respons.json())
+    .then(data => {
+        const profile = data.results[0];
+        displayProfile(profile);
+
+    })
+    .catch(error => console.error('Error fetching random profile:', error));
+}
+//Funksjon for å vise profilen i kortet
+
         </script>
 </body>
 
