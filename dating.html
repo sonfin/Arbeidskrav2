@@ -77,6 +77,14 @@ function fetchRandomProfile(gender = '') {
     .catch(error => console.error('Error fetching random profile:', error));
 }
 //Funksjon for å vise profilen i kortet
+function display(profile) {
+    const profileCard = document.querySelector('.dating-card');
+    profileCard.querySelector('img').src = profile.picture.large;
+    profileCard.querySelector('#navn').textContent =  `${profile.name.first} ${profile.name.last}`;
+    profileCard.querySelector('#bosted').textcontent = `${profile.location.city}, ${profile.location.Country}`;
+
+}
+
 
         </script>
 </body>
