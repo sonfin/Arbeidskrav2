@@ -129,11 +129,31 @@ function deleteProfile(profile) {
     const index = likesProfiles.indexOf(profile);
     if (index !== -1) {
         likedProfiles.splice(index, 1);
-        localStorage.setItem('likedProfiles', JSON,stringify(likedProfiles));
+        localStorage.setItem('likedProfiles', JSON(likedProfiles));
         renderLikedProfiles();
         
     }
 }
+
+// Lyttere for tastatur
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+        swipeLeft();
+    
+    } else if (event.key === 'ArrowRight') {
+        swipeRight(profiles[0]); //?
+    
+    }
+})
+
+// Lyttere for filtreringsknapper
+document.getElementById('kvinner.btn').addEventListener('click', () => fetchRandomProfile('female'))
+document.getElementById('menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
+document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile());
+
+// Hent en tilfeldig profil når siden lastes
+fetchRandomProfile();
+
 
         </script>
 </body>
