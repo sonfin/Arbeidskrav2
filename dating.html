@@ -30,15 +30,16 @@
         <!-- Container for kjønns knappene -->
         <div class="gender-container">
             <div class="side-buttons">
-                <button id="kvinner-btn">Kvinner</button>
-                <button id="menn-btn">Menn</button>
+                <button id="kvinner-btn" data-gender="female">Kvinner</button>
+                <button id="menn-btn" data-gender="male">Menn</button>
                 <button id="begge-btn">Begge kjønn</button>
             </div>
 
+            <p id="score">Score: <span id="score-value">10</span></p>
 
             <!-- Container for dating kortet i midten-->
             <div class="dating-card">
-                <img src="placeholder.jpg" alt="Dating Bilde">
+                <img src="" alt="Dating Bilde">
                 <p id="navn">Navn</p>
                 <p id="bosted">Bosted</p>
             </div>
@@ -54,9 +55,11 @@
         </div>
 
         <script>
+
             // score og liked profiles
             let score = 10;
-            let likerProfiles = [];
+            let likedProfiles = [];
+            let currentProfile;
 
             //Funksjon som oppdaterer visning av scoret
             function updateScoreDisplay() {
@@ -64,29 +67,52 @@
                 scoreDisplay.textContent = score;
             }
 
+            //Funksjon for å vise type profil i kortet
+            function display(profile) {
+                const profileCard = document.querySelector('.dating-card');
+                profileCard.querySelector('img').src = profile.picture.large;
+                profileCard.querySelector('#navn').textContent = `${profile.name.first} ${profile.name.last}`;
+                profileCard.querySelector('#bosted').textContent = `${profile.location.city}, ${profile.location.country}`;
+
+                // Fjern eksisterende border-klasser
+                profileCard.classList.remove('male-border', 'female-border');
+
+                // Legg til riktig border-klasse basert på kjønn
+                if (profile.gender === 'male') {
+                    console.log('Adding male-border class');
+                    profileCard.classList.add('male-border');
+                } else if (profile.gender === 'female') {
+                    console.log('Adding female-border class');
+                    profileCard.classList.add('female-border');
+                }
+            }
+
             //Funksjon for å hente og vise tilfeldig profil
-            async function fetchRandomProfile() {
+            async function fetchRandomProfile(gender) {
                 const genderParam = gender ? `&gender=${gender}` : '';
-                fetch("https://randomuser.me/api/")
+                fetch("https://randomuser.me/api/?" + genderParam)
                     .then(response => response.json())
                     .then(data => {
                         const profile = data.results[0];
-                        displayProfile(profile);
+                        currentProfile = profile;
+                        display(profile);
 
                     })
                     .catch(error => console.error('Error fetching random profile:', error));
             }
+
+
             //Funksjon for å vise profilen i kortet
             function display(profile) {
                 const profileCard = document.querySelector('.dating-card');
                 profileCard.querySelector('img').src = profile.picture.large;
                 profileCard.querySelector('#navn').textContent = `${profile.name.first} ${profile.name.last}`;
-                profileCard.querySelector('#bosted').textContent = `${profile.location.city}, ${profile.location.Country}`;
+                profileCard.querySelector('#bosted').textContent = `${profile.location.city}, ${profile.location.country}`;
 
             }
 
             //Funksjon for å bytte ut kortet med en ny profil
-            function swipeleft() {
+            function swipeLeft() {
                 fetchRandomProfile();
             }
 
@@ -98,7 +124,7 @@
                 updateScoreDisplay();
 
                 //Hvis brukeren har nådd maksimalt antall likte profiler
-                if (likedProfiles.lenght > 10) {
+                if (likedProfiles.length > 10) {
                     alert('Du har likt for mange profiler.Vennligst slett noen profiler fra oversikten.');
 
                 }
@@ -141,13 +167,13 @@
                     swipeLeft();
 
                 } else if (event.key === 'ArrowRight') {
-                    swipeRight(profiles[0]); //?
+                    swipeRight(currentProfile); //?
 
                 }
             })
 
             // Lyttere for filtreringsknapper
-            document.getElementById('kvinner.btn').addEventListener('click', () => fetchRandomProfile('female'))
+            document.getElementById('kvinner-btn').addEventListener('click', () => fetchRandomProfile('female'));
             document.getElementById('menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
             document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile());
 
