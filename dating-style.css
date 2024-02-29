@@ -115,16 +115,6 @@ button {
   border-radius: 10px;
 }
 
-.male-border {
-  border-color: #5f535c !important;
-  border-width: 8px;
-}
-
-.female-border {
-  border-color: #a68582 !important;
-  border-width: 8px;
-}
-
 .matched-cards {
   flex-basis: 40%;
   margin-left: 20px;
