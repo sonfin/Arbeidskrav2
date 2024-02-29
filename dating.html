@@ -60,6 +60,8 @@
             let score = 10;
             let likedProfiles = [];
             let currentProfile;
+            let currentGenderFilter = '';
+
 
             //Funksjon som oppdaterer visning av scoret
             function updateScoreDisplay() {
@@ -89,7 +91,11 @@
 
             //Funksjon for å hente og vise tilfeldig profil
             async function fetchRandomProfile(gender) {
-                const genderParam = gender ? `&gender=${gender}` : '';
+                if (gender) {
+                    currentGenderFilter = gender;
+                }
+
+                const genderParam = currentGenderFilter ? `&gender=${currentGenderFilter}` : '';
                 fetch("https://randomuser.me/api/?" + genderParam)
                     .then(response => response.json())
                     .then(data => {
@@ -176,6 +182,7 @@
             document.getElementById('kvinner-btn').addEventListener('click', () => fetchRandomProfile('female'));
             document.getElementById('menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
             document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile());
+
 
             // Hent en tilfeldig profil når siden lastes
             fetchRandomProfile();
