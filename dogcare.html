@@ -173,9 +173,15 @@
       // Nye arrays til de forskellige hunderasebildene
       const openMenu = document.getElementById("open-breeds-menu");
       openMenu.onclick = toggleMenu;
+      let breed0 = [];
+      let breed1 = [];
+      let breed2 = [];
+      let breed3 = [];
+      let breed4 = [];
 
       function toggleMenu() {
         // Funksjon for å kunne hente inn 5 nye hunderaser, og må da slette de gamle først
+
         clearDiv();
         function clearDiv() {
           const randomBreeds = document.querySelector(".random-breeds");
@@ -183,6 +189,7 @@
             randomBreeds.removeChild(randomBreeds.firstChild);
           }
         }
+
         // Hente ut 5 tilfeldige hunderaser
         // Vet det ikke er nødvendig, men var litt gøyere enn å bare velge 5.
         // Funksjon for å forsikre meg om at det ikke kan bli 2 av den samme hunden
@@ -192,32 +199,89 @@
             const randomNumber = Math.floor(Math.random() * breedsArray.length);
             if (!uniqueDogs.includes(randomNumber)) {
               uniqueDogs.push(randomNumber);
+              console.log(uniqueDogs);
             }
           }
           return uniqueDogs.map((index) => breedsArray[index]);
         }
         const uniqueBreeds = uniqueDogs();
-        // Lager her 5 knapper med navn, id, og klasse.
 
-        // Her kan det hende at det er mer praktisk å gjøre som du gjorde på i funksjon på linje 107?
+        // Lager her 5 knapper med navn, id, klasse og onclick.
         for (let i = 0; i < uniqueBreeds.length; i++) {
           const menu = document.createElement("button");
           document.querySelector(".random-breeds").appendChild(menu);
           menu.textContent = `${uniqueBreeds[i]}`;
           menu.id = `breed-${i}`;
           menu.className = "btn";
-          console.log(uniqueBreeds[i]);
+          menu.onclick = () => showBreed(uniqueBreeds[i], i);
         }
 
-        // Vet ikke helt hvordan det er smartest å hente inn api til disse 5.
-        //
-        // `https://dog.ceo/api/breed/${uniqueBreeds[0]}/images/random/10`
-        // `https://dog.ceo/api/breed/${uniqueBreeds[1]}/images/random/10`
-        // `https://dog.ceo/api/breed/${uniqueBreeds[2]}/images/random/10`
-        // `https://dog.ceo/api/breed/${uniqueBreeds[3]}/images/random/10`
-        // `https://dog.ceo/api/breed/${uniqueBreeds[4]}/images/random/10`
+        console.log(uniqueBreeds);
+        fetchApi(
+          uniqueBreeds[0],
+          uniqueBreeds[1],
+          uniqueBreeds[2],
+          uniqueBreeds[3],
+          uniqueBreeds[4]
+        );
       }
 
+      //Fetch 5 api
+      function fetchApi(dog0, dog1, dog2, dog3, dog4) {
+        async function getBreedZero() {
+          const breedZeroRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog0}/images/random/10`
+          );
+
+          const breedZeroResult = await breedZeroRequest.json();
+          return breedZeroResult.message;
+        }
+        async function getBreedOne() {
+          const breedOneRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog1}/images/random/10`
+          );
+          const breedOneResult = await breedOneRequest.json();
+          return breedOneResult.message;
+        }
+        async function getBreedTwo() {
+          const breedTwoRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog2}/images/random/10`
+          );
+          const breedTwoResult = await breedTwoRequest.json();
+          return breedTwoResult.message;
+        }
+        async function getBreedThree() {
+          const breedThreeRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog3}/images/random/10`
+          );
+          const breedThreeResult = await breedThreeRequest.json();
+          return breedThreeResult.message;
+        }
+        async function getBreedFour() {
+          const breedFourRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog4}/images/random/10`
+          );
+          const breedFourResult = await breedFourRequest.json();
+          return breedFourResult.message;
+        }
+
+        async function initializeBreeds() {
+          try {
+            breed0 = await getBreedZero();
+            breed1 = await getBreedOne();
+            breed2 = await getBreedTwo();
+            breed3 = await getBreedThree();
+            breed4 = await getBreedFour();
+          } catch (error) {
+            console.error("Error med å laste innhold");
+          }
+        }
+        initializeBreeds();
+      }
+      function showBreed(breed, index) {
+        console.log(breed, index);
+        console.log(breed4);
+      }
       //oppgave 5.1
       const closeBtn = document.getElementById("close-button");
       const ownerImg = document.getElementById("owner-picture");
