@@ -66,6 +66,32 @@ button {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#kvinner-btn {
+  border-color: #a68582;
+  border-width: 4px;
+}
+
+#kvinner-btn:hover {
+  background: #a68582;
+  color: white;
+}
+
+#menn-btn {
+  border-color: #5f535c;
+  border-width: 4px;
+}
+#menn-btn:hover {
+  background: #5f535c;
+  color: white;
+}
+
+#begge-btn:hover {
+  background: transparent;
+  color: white;
+  border-color: white;
+  border-width: 4px;
+}
+
 .dating-card {
   width: 600px;
   height: 700px;
