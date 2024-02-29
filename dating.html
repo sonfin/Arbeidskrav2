@@ -91,7 +91,7 @@
 
             //Funksjon for å hente og vise tilfeldig profil
             async function fetchRandomProfile(gender) {
-                if (gender) {
+                if (gender !== undefined) {
                     currentGenderFilter = gender;
                 }
 
@@ -102,20 +102,13 @@
                         const profile = data.results[0];
                         currentProfile = profile;
                         display(profile);
-
                     })
                     .catch(error => console.error('Error fetching random profile:', error));
             }
 
 
-            //Funksjon for å vise profilen i kortet
-            function display(profile) {
-                const profileCard = document.querySelector('.dating-card');
-                profileCard.querySelector('img').src = profile.picture.large;
-                profileCard.querySelector('#navn').textContent = `${profile.name.first} ${profile.name.last}`;
-                profileCard.querySelector('#bosted').textContent = `${profile.location.city}, ${profile.location.country}`;
 
-            }
+
 
             //Funksjon for å bytte ut kortet med en ny profil
             function swipeLeft() {
@@ -181,7 +174,8 @@
             // Lyttere for filtreringsknapper
             document.getElementById('kvinner-btn').addEventListener('click', () => fetchRandomProfile('female'));
             document.getElementById('menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
-            document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile());
+            document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile(''));
+
 
 
             // Hent en tilfeldig profil når siden lastes
