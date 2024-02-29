@@ -16,13 +16,14 @@
           ><div class="nav-div dog-care"><p>Dog-care</p></div></a
         >
       </nav>
+      <div class="dog-care-nav">
+        <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
+        <div class="random-breeds"></div>
+        <button id="open-breeds-menu" class="btn">⬅️ Hent hunderaser</button>
+      </div>
     </header>
     <main>
-      <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
-      <button id="open-breeds-menu" class="btn">⬅️ Hent hunderaser</button>
-      <button id="" class="btn">Test</button>
       <div id="dog-care-cards"></div>
-
       <div class="chat-box">
         <div class="chat-name">
           <div class="img-div">
@@ -109,18 +110,18 @@
           const owner = owners[index];
           const dog = dogs[index];
           cards += `
-        <div class="card">
-          <div class="image-container">
-            <img src="${dogs[index]}" alt="hund">
-          </div>
-          <div class="image-container">
-            <img src="${owner.picture.large}" alt="eier">
-          </div>
-          <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
-          <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
-          <button id="delete-btn" class="btn" onclick="deleteCard(${index})">✖ Slett</button>
-          <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
-        </div>`;
+              <div class="card">
+                <div class="image-container">
+                  <img src="${dogs[index]}" alt="hund">
+                </div>
+                <div class="image-container">
+                  <img src="${owner.picture.large}" alt="eier">
+                </div>
+                <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
+                <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
+                <button id="delete-btn" class="btn" onclick="deleteCard(${index})">✖ Slett</button>
+                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
+              </div>`;
         }
         dogCareCards.innerHTML = cards;
 
@@ -169,29 +170,52 @@
       initializeDogsAndOwners();
 
       // Oppgave 4
-
+      // Nye arrays til de forskellige hunderasebildene
       const openMenu = document.getElementById("open-breeds-menu");
       openMenu.onclick = toggleMenu;
 
       function toggleMenu() {
+        // Funksjon for å kunne hente inn 5 nye hunderaser, og må da slette de gamle først
+        clearDiv();
+        function clearDiv() {
+          const randomBreeds = document.querySelector(".random-breeds");
+          while (randomBreeds.firstChild) {
+            randomBreeds.removeChild(randomBreeds.firstChild);
+          }
+        }
         // Hente ut 5 tilfeldige hunderaser
-        for (let i = 0; i < 5; i++) {
-          const randomNumber =
-            Math.floor(Math.random() * breedsArray.length) + 0;
-          console.log(breedsArray[randomNumber]);
+        // Vet det ikke er nødvendig, men var litt gøyere enn å bare velge 5.
+        // Funksjon for å forsikre meg om at det ikke kan bli 2 av den samme hunden
+        function uniqueDogs() {
+          const uniqueDogs = [];
+          while (uniqueDogs.length < 5) {
+            const randomNumber = Math.floor(Math.random() * breedsArray.length);
+            if (!uniqueDogs.includes(randomNumber)) {
+              uniqueDogs.push(randomNumber);
+            }
+          }
+          return uniqueDogs.map((index) => breedsArray[index]);
+        }
+        const uniqueBreeds = uniqueDogs();
+        // Lager her 5 knapper med navn, id, og klasse.
+
+        // Her kan det hende at det er mer praktisk å gjøre som du gjorde på i funksjon på linje 107?
+        for (let i = 0; i < uniqueBreeds.length; i++) {
+          const menu = document.createElement("button");
+          document.querySelector(".random-breeds").appendChild(menu);
+          menu.textContent = `${uniqueBreeds[i]}`;
+          menu.id = `breed-${i}`;
+          menu.className = "btn";
+          console.log(uniqueBreeds[i]);
         }
 
-        /* const menu = document.createElement("button");
-        document.main.appendChild(menu);
-
-        for (let i = 0; i < itemArray.length; i++) {
-          let listElement = document.createElement("li");
-
-          listElement.style.backgroundColor =
-            itemArray[i].status == "pakket" ? "green" : "yellow";
-          listElement.innerHTML = itemArray[i].name;
-          document.body.appendChild(listElement);
-        } */
+        // Vet ikke helt hvordan det er smartest å hente inn api til disse 5.
+        //
+        // `https://dog.ceo/api/breed/${uniqueBreeds[0]}/images/random/10`
+        // `https://dog.ceo/api/breed/${uniqueBreeds[1]}/images/random/10`
+        // `https://dog.ceo/api/breed/${uniqueBreeds[2]}/images/random/10`
+        // `https://dog.ceo/api/breed/${uniqueBreeds[3]}/images/random/10`
+        // `https://dog.ceo/api/breed/${uniqueBreeds[4]}/images/random/10`
       }
 
       //oppgave 5.1
@@ -341,13 +365,15 @@
         const dogGreetingBubble = document.createElement("div");
         dogGreetingBubble.classList.add("dog-greeting-bubble");
         dogGreetingBubble.innerHTML = `
-        <div class="dog-icon">
-          <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
-        </div>
-        <div class="dog-greeting-text">
-          <p>${dogSounds[Math.floor(Math.random() * dogSounds.length)]}</p>
-        </div>
-        `;
+              <div class="dog-icon">
+                <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
+              </div>
+              <div class="dog-greeting-text">
+                <p>${
+                  dogSounds[Math.floor(Math.random() * dogSounds.length)]
+                }</p>
+              </div>
+              `;
         card.appendChild(dogGreetingBubble);
 
         if (dogGreetingBubble) {
