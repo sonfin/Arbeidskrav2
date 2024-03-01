@@ -168,7 +168,7 @@
 
                 } else if (event.key === 'ArrowRight') {
                     swipeRight(currentProfile); //?
-checkScore();
+                    checkScore();
                 }
             })
 
@@ -182,33 +182,33 @@ checkScore();
             // Hent en tilfeldig profil når siden lastes
             fetchRandomProfile();
 
-// Funksjon for å sjekke om brukeren er tom for poeng
-function checkScore() {
-    if (score <= 0) {
-        let answer = false
-        while (!answer) {
-            answer = confirm('Har du lyst til å swipe mer? Ja/Nei');
-            if (answer) {
-                score = 10;
-                updateScoreDisplay();
-                break;
+            // Funksjon for å sjekke om brukeren er tom for poeng
+            function checkScore() {
+                if (score <= 0) {
+                    let answer = false
+                    while (!answer) {
+                        answer = confirm('Har du lyst til å swipe mer? Ja/Nei');
+                        if (answer) {
+                            score = 10;
+                            updateScoreDisplay();
+                            break;
+                        }
+                    }
+                }
             }
-        }
-    }
-}
 
-//Funksjon for å oppdatere score-display
-function updateScoreDisplay() {
-    const scoreDisplay = document.getElementById('score-value');
-    scoreDisplay.textContent = score;
-}
+            //Funksjon for å oppdatere score-display
+            function updateScoreDisplay() {
+                const scoreDisplay = document.getElementById('score-value');
+                scoreDisplay.textContent = score;
+            }
 
-//Redusere score-poeng
-function decreaseScore() {
-    score--;
-    updateScoreDisplay();
-    checkScore(); //sjekker om brukeren ikke har mer poeng
-}
+            //Redusere score-poeng
+            function decreaseScore() {
+                score--;
+                updateScoreDisplay();
+                checkScore(); //sjekker om brukeren ikke har mer poeng
+            }
         </script>
 </body>
 
