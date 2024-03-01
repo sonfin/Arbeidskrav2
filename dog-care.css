@@ -144,27 +144,28 @@ nav {
   right: 20px;
 }
 .dog-greeting-bubble {
-  position: sticky;
-  top: -10%;
-  left: 80%;
-  width: 25%;
-  height: 15%;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-}
-.dog-icon {
-  margin-right: 10px;
-}
+        position: absolute;
+        top: -10%;
+        left: 80%;
+        width: 25%; 
+        height: 15%; 
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+      }
 
-.dog-icon img {
-  width: 30px;
-  height: 30px;
-}
+      .dog-icon {
+        margin-right: 10px;
+      }
+
+      .dog-icon img {
+        width: 30px;
+        height: 30px;
+      }
 
 /* chat box styling */
 .chat-box {
