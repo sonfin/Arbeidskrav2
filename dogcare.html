@@ -16,11 +16,14 @@
           ><div class="nav-div dog-care"><p>Dog-care</p></div></a
         >
       </nav>
+      <div class="dog-care-nav">
+        <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
+        <div class="random-breeds"></div>
+        <button id="open-breeds-menu" class="btn">⬅️ Hent hunderaser</button>
+      </div>
     </header>
     <main>
-      <button id="show-new-cards-btn" class="btn">Vis 10 nye kort</button>
       <div id="dog-care-cards"></div>
-
       <div class="chat-box">
         <div class="chat-name">
           <div class="img-div">
@@ -58,6 +61,8 @@
 
       let dogs = [];
       let owners = [];
+      let breeds = [];
+      let breedsArray = [];
 
       //Funksjon for å hente inn 10 random hunde bilder
       async function getDogs() {
@@ -66,6 +71,14 @@
         );
         const dogsResult = await dogsRequest.json();
         return dogsResult.message;
+      }
+
+      //Funksjon for å hente inn alle hunderasene
+      async function getBreeds() {
+        const breedRequest = await fetch("https://dog.ceo/api/breeds/list/all");
+
+        const breedResult = await breedRequest.json();
+        return breedResult.message;
       }
 
       //Funksjon for å hente inn navn, lokasjon og bilde for 10 random brukere
@@ -77,11 +90,13 @@
         return ownersResult.results;
       }
 
-      //Funksjon for å legge inn date i globale variabler dogs og owners, samt error håndtering
+      //Funksjon for å legge inn date i globale variabler breeds, dogs og owners, samt error håndtering
       async function initializeDogsAndOwners() {
         try {
           dogs = await getDogs();
           owners = await getOwners();
+          breeds = await getBreeds();
+          breedsArray = Object.keys(breeds);
           displayDogsAndOwners();
         } catch (error) {
           console.error("Error med å laste innhold", error);
@@ -95,18 +110,18 @@
           const owner = owners[index];
           const dog = dogs[index];
           cards += `
-        <div class="card">
-          <div class="image-container">
-            <img src="${dogs[index]}" alt="hund">
-          </div>
-          <div class="image-container">
-            <img src="${owner.picture.large}" alt="eier">
-          </div>
-          <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
-          <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
-          <button id="delete-btn" class="btn" onclick="deleteCard(${index})">✖ Slett</button>
-          <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
-        </div>`;
+              <div class="card">
+                <div class="image-container">
+                  <img src="${dogs[index]}" alt="hund">
+                </div>
+                <div class="image-container">
+                  <img src="${owner.picture.large}" alt="eier">
+                </div>
+                <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
+                <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
+                <button id="delete-btn" class="btn" onclick="deleteCard(${index})">✖ Slett</button>
+                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
+              </div>`;
         }
         dogCareCards.innerHTML = cards;
 
@@ -153,6 +168,163 @@
       }
 
       initializeDogsAndOwners();
+
+      // Oppgave 4
+      // Nye arrays til de forskellige hunderasebildene
+      const openMenu = document.getElementById("open-breeds-menu");
+      openMenu.onclick = toggleMenu;
+      let breed0 = [];
+      let breed1 = [];
+      let breed2 = [];
+      let breed3 = [];
+      let breed4 = [];
+
+      function toggleMenu() {
+        // Funksjon for å kunne hente inn 5 nye hunderaser, og må da slette de gamle først
+
+        clearDiv();
+        function clearDiv() {
+          const randomBreeds = document.querySelector(".random-breeds");
+          while (randomBreeds.firstChild) {
+            randomBreeds.removeChild(randomBreeds.firstChild);
+          }
+        }
+
+        // Hente ut 5 tilfeldige hunderaser
+        // Vet det ikke er nødvendig, men var litt gøyere enn å bare velge 5.
+        // Funksjon for å forsikre meg om at det ikke kan bli 2 av den samme hunden
+        function uniqueDogs() {
+          const uniqueDogs = [];
+          while (uniqueDogs.length < 5) {
+            const randomNumber = Math.floor(Math.random() * breedsArray.length);
+            if (!uniqueDogs.includes(randomNumber)) {
+              uniqueDogs.push(randomNumber);
+            }
+          }
+          return uniqueDogs.map((index) => breedsArray[index]);
+        }
+        const uniqueBreeds = uniqueDogs();
+
+        // Lager her 5 knapper med navn, id, klasse og onclick.
+        for (let i = 0; i < uniqueBreeds.length; i++) {
+          const menu = document.createElement("button");
+          document.querySelector(".random-breeds").appendChild(menu);
+          menu.textContent = `${uniqueBreeds[i]}`;
+          menu.id = `breed-${i}`;
+          menu.className = "btn";
+          menu.onclick = () => showBreed(uniqueBreeds[i], i);
+        }
+        fetchApi(
+          uniqueBreeds[0],
+          uniqueBreeds[1],
+          uniqueBreeds[2],
+          uniqueBreeds[3],
+          uniqueBreeds[4]
+        );
+      }
+
+      //Fetch 5 api
+      function fetchApi(dog0, dog1, dog2, dog3, dog4) {
+        async function getBreedZero() {
+          const breedZeroRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog0}/images/random/10`
+          );
+
+          const breedZeroResult = await breedZeroRequest.json();
+          return breedZeroResult.message;
+        }
+        async function getBreedOne() {
+          const breedOneRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog1}/images/random/10`
+          );
+          const breedOneResult = await breedOneRequest.json();
+          return breedOneResult.message;
+        }
+        async function getBreedTwo() {
+          const breedTwoRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog2}/images/random/10`
+          );
+          const breedTwoResult = await breedTwoRequest.json();
+          return breedTwoResult.message;
+        }
+        async function getBreedThree() {
+          const breedThreeRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog3}/images/random/10`
+          );
+          const breedThreeResult = await breedThreeRequest.json();
+          return breedThreeResult.message;
+        }
+        async function getBreedFour() {
+          const breedFourRequest = await fetch(
+            `https://dog.ceo/api/breed/${dog4}/images/random/10`
+          );
+          const breedFourResult = await breedFourRequest.json();
+          return breedFourResult.message;
+        }
+
+        async function initializeBreeds() {
+          try {
+            breed0 = await getBreedZero();
+            breed1 = await getBreedOne();
+            breed2 = await getBreedTwo();
+            breed3 = await getBreedThree();
+            breed4 = await getBreedFour();
+            owners = await getOwners();
+          } catch (error) {
+            console.error("Error med å laste innhold");
+          }
+        }
+        initializeBreeds();
+      }
+      function showBreed(breed, index) {
+        clearDogCareCards();
+        function clearDogCareCards() {
+          while (dogCareCards.firstChild) {
+            dogCareCards.removeChild(dogCareCards.firstChild);
+          }
+        }
+        console.log(breed, index);
+        if (index === 0) {
+          displayBreedsAndOwners(breed0);
+        } else if (index === 1) {
+          displayBreedsAndOwners(breed1);
+        } else if (index === 2) {
+          displayBreedsAndOwners(breed2);
+        } else if (index === 3) {
+          displayBreedsAndOwners(breed3);
+        } else if (index === 4) {
+          displayBreedsAndOwners(breed4);
+        }
+      }
+
+      // KUN FOR TEST!!
+
+      function displayBreedsAndOwners(breed) {
+        let cards = "";
+        for (let index = 0; index < breed.length; index++) {
+          const owner = owners[index];
+          cards += `
+              <div class="card">
+                <div class="image-container">
+                  <img src="${breed[index]}" alt="hund">
+                </div>
+                <div class="image-container">
+                  <img src="${owner.picture.large}" alt="eier">
+                </div>
+                <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
+                <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
+                
+                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
+              </div>`;
+        }
+        dogCareCards.innerHTML = cards;
+
+        // Event listener for hvert kort til dogGreeting
+        const cardElements = document.querySelectorAll(".card");
+        cardElements.forEach((card, index) => {
+          card.addEventListener("click", () => dogGreeting(card));
+        });
+      }
 
       //oppgave 5.1
       const closeBtn = document.getElementById("close-button");
@@ -301,13 +473,15 @@
         const dogGreetingBubble = document.createElement("div");
         dogGreetingBubble.classList.add("dog-greeting-bubble");
         dogGreetingBubble.innerHTML = `
-        <div class="dog-icon">
-          <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
-        </div>
-        <div class="dog-greeting-text">
-          <p>${dogSounds[Math.floor(Math.random() * dogSounds.length)]}</p>
-        </div>
-        `;
+              <div class="dog-icon">
+                <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
+              </div>
+              <div class="dog-greeting-text">
+                <p>${
+                  dogSounds[Math.floor(Math.random() * dogSounds.length)]
+                }</p>
+              </div>
+              `;
         card.appendChild(dogGreetingBubble);
 
         if (dogGreetingBubble) {
