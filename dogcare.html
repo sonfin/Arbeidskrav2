@@ -199,7 +199,6 @@
             const randomNumber = Math.floor(Math.random() * breedsArray.length);
             if (!uniqueDogs.includes(randomNumber)) {
               uniqueDogs.push(randomNumber);
-              console.log(uniqueDogs);
             }
           }
           return uniqueDogs.map((index) => breedsArray[index]);
@@ -215,8 +214,6 @@
           menu.className = "btn";
           menu.onclick = () => showBreed(uniqueBreeds[i], i);
         }
-
-        console.log(uniqueBreeds);
         fetchApi(
           uniqueBreeds[0],
           uniqueBreeds[1],
@@ -272,6 +269,7 @@
             breed2 = await getBreedTwo();
             breed3 = await getBreedThree();
             breed4 = await getBreedFour();
+            owners = await getOwners();
           } catch (error) {
             console.error("Error med å laste innhold");
           }
@@ -287,17 +285,47 @@
         }
         console.log(breed, index);
         if (index === 0) {
-          console.log(breed0);
+          displayBreedsAndOwners(breed0);
         } else if (index === 1) {
-          console.log(breed1);
+          displayBreedsAndOwners(breed1);
         } else if (index === 2) {
-          console.log(breed2);
+          displayBreedsAndOwners(breed2);
         } else if (index === 3) {
-          console.log(breed3);
+          displayBreedsAndOwners(breed3);
         } else if (index === 4) {
-          console.log(breed4);
+          displayBreedsAndOwners(breed4);
         }
       }
+
+      // KUN FOR TEST!!
+
+      function displayBreedsAndOwners(breed) {
+        let cards = "";
+        for (let index = 0; index < breed.length; index++) {
+          const owner = owners[index];
+          cards += `
+              <div class="card">
+                <div class="image-container">
+                  <img src="${breed[index]}" alt="hund">
+                </div>
+                <div class="image-container">
+                  <img src="${owner.picture.large}" alt="eier">
+                </div>
+                <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
+                <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
+                
+                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
+              </div>`;
+        }
+        dogCareCards.innerHTML = cards;
+
+        // Event listener for hvert kort til dogGreeting
+        const cardElements = document.querySelectorAll(".card");
+        cardElements.forEach((card, index) => {
+          card.addEventListener("click", () => dogGreeting(card));
+        });
+      }
+
       //oppgave 5.1
       const closeBtn = document.getElementById("close-button");
       const ownerImg = document.getElementById("owner-picture");
