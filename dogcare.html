@@ -279,8 +279,24 @@
         initializeBreeds();
       }
       function showBreed(breed, index) {
+        clearDogCareCards();
+        function clearDogCareCards() {
+          while (dogCareCards.firstChild) {
+            dogCareCards.removeChild(dogCareCards.firstChild);
+          }
+        }
         console.log(breed, index);
-        console.log(breed4);
+        if (index === 0) {
+          console.log(breed0);
+        } else if (index === 1) {
+          console.log(breed1);
+        } else if (index === 2) {
+          console.log(breed2);
+        } else if (index === 3) {
+          console.log(breed3);
+        } else if (index === 4) {
+          console.log(breed4);
+        }
       }
       //oppgave 5.1
       const closeBtn = document.getElementById("close-button");
