@@ -87,7 +87,7 @@ nav {
   grid-template-columns: repeat(2, 200px);
   grid-template-rows: repeat(3, auto);
   place-content: center;
-  gap: 10px;
+  gap: 20px;
   border: 2px solid rgb(255, 255, 255);
   border-radius: 8px;
   padding: 40px;
@@ -152,9 +152,7 @@ nav {
 .btn:hover {
   outline: 0;
 }
-.btn::first-letter{
-  text-transform: capitalize;
-}
+
 
 
 #show-new-cards-btn {
