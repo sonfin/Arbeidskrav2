@@ -63,10 +63,10 @@ nav {
 /* cards styling */
 #dog-care-cards {
   display: grid;
-  grid: 1fr 1fr/ 1fr 1fr;
+  grid: auto/ 500px 500px;
   place-content: center;
-  gap: 40px;
-  margin: 100px 150px;
+  gap: 50px;
+  margin: 100px auto;
 }
 .card img {
   width: 100%;
@@ -87,17 +87,17 @@ nav {
   grid-template-columns: repeat(2, 200px);
   grid-template-rows: repeat(3, auto);
   place-content: center;
-  gap: 10px;
+  gap: 20px;
   border: 2px solid rgb(255, 255, 255);
   border-radius: 8px;
   padding: 40px;
   /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.071);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(15.6px);
   border: 1px solid rgb(255, 255, 255);
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 /*https://getcssscan.com/css-buttons-examples*/
@@ -116,7 +116,7 @@ nav {
   color: #000000;
   cursor: pointer;
   display: flex;
-  font-size: 16px;
+  font-size: 1rem;
   height: 48px;
   justify-content: center;
   line-height: 24px;
@@ -152,9 +152,7 @@ nav {
 .btn:hover {
   outline: 0;
 }
-.btn::first-letter{
-  text-transform: capitalize;
-}
+
 
 
 #show-new-cards-btn {
@@ -171,16 +169,16 @@ nav {
 .dog-greeting-bubble {
   position: absolute;
   top: -10%;
-  left: 80%;
-  width: 25%;
+  left: 75%;
+  width: 30%;
   height: 15%;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
+  background: rgba(255, 255, 255);
+  border-radius: 8px 8px 8px 0;
   padding: 10px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 1rem;
 }
 
 .dog-icon {
@@ -203,18 +201,16 @@ nav {
   border: 1px solid rgb(255, 255, 255);
   width: 275px;
   height: 50vh;
-  background-color: #044f48;
   opacity: 97%;
-  font-family: Arial, sans-serif;
-  font-size: 15px;
+  
 }
 /* Øvre del av boks */
 .chat-box h1 {
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   color: rgb(232, 232, 232);
 }
 .chat-box h2 {
-  font-size: 0.6rem;
+  font-size: 0.7em;
   color: rgb(190, 190, 190);
 }
 .chat-box p {
@@ -237,25 +233,34 @@ nav {
 /* Her må jeg fikse img sizing. Så det ikke strekkes... */
 .img-div {
   display: flex;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
   border: 2px solid rgb(10, 59, 13);
   margin: 5px;
   overflow: hidden;
 }
 #close-button {
-  margin: 5px;
-  height: 25px;
-  width: 25px;
+  margin: 8px;
+  height: 20px;
+  width: 20px;
 }
 #close-button:hover {
   cursor: pointer;
   opacity: 80%;
 }
 /* Middten av boksen */
+.delete-icon{
+  position: relative;
+  top: -13px;
+  right: 16px;
+  font-size: 12px;
+}
+.delete-icon:hover {
+  cursor: pointer;
+}
 .chat-messages {
-  background-color: #526b78;
+  background-color: #cfd9de;
   overflow: scroll;
   position: relative;
   width: 100%;
@@ -267,12 +272,13 @@ nav {
   border-radius: 5px;
   display: inline-block;
   max-width: 80%;
+  font-size: 0.7rem;
 }
 .sent {
   background-color: #83959f;
   color: white;
   float: right;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   margin: 8px;
   padding: 6px 10px 7px;
   border-radius: 10px 10px 0 10px;
@@ -281,7 +287,7 @@ nav {
   background-color: #082C3F;
   color: rgb(216, 216, 216);
   float: left;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   margin: 8px;
   padding: 6px 10px 7px;
   border-radius: 10px 10px 10px 0px;
@@ -300,12 +306,16 @@ nav {
   outline: none;
   padding-left: 10px;
   border: none;
+  font-size: 0.8rem;
+}
+.chat-text-input::placeholder{
+  color: lightgray;
 }
 .chat-send-button {
   color: white;
   border: none;
   background: #248a52;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   padding: 3px 6px;
   border-radius: 10px;
 }
