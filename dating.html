@@ -48,7 +48,7 @@
             <div class="matched-cards">
                 <div class="image-grid">
 
-                  
+                    <!--Her må det legges til flere bilder etter vi har koblet til API-->
                 </div>
             </div>
 
@@ -236,33 +236,19 @@
             fetchRandomProfile();
 
             // Funksjon for å sjekke om brukeren er tom for poeng
-          function askForMoreSwipes() {
-            return new Promise(resolve => {
-                let answer = false;
-                while (!answer) {
-                    answer = confirm('Har du lyst tli å swipe mer? Ja/Nei');
-                    if (answer) {
-                        resolve(true); //Brukeren vil fortsette å swipe
-                    
+            function checkScore() {
+                if (score <= 0) {
+                    let answer = false
+                    while (!answer) {
+                        answer = confirm('Har du lyst til å swipe mer? Ja/Nei');
+                        if (answer) {
+                            score = 10;
+                            updateScoreDisplay();
+                            break;
+                        }
                     }
                 }
-            })
-
-          }
-
-          //legge til profil i likte profiler
-          function swipeRight(profile) {
-            if (likedProfiles.lenght >= 10) {
-                alert('Du har allerede likt 10 profiler. Vennligst slett noen profiler før du liker flere');
-                return;
             }
-            
-          }
-
-
-
-
-
 
             //Funksjon for å oppdatere score-display
             function updateScoreDisplay() {
@@ -315,7 +301,7 @@ editForm.addEventListener('submit', (event) => {
     profile.dob.age = newAge;
     [profile.location.city, profile.location.country] = newLocation.split(', ');
 
-
+    console.log('Update profile:', profile);
 
  //oppdater visning
  display(profile);
