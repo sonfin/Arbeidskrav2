@@ -122,6 +122,12 @@
                 score--;
                 updateScoreDisplay();
 
+                // Appende de matchede kortene til matched cards container
+                const matchedCardsContainer = document.querySelector('.matched-cards .image-grid');
+                const matchedCard = createMatchedCardElement(profile);
+                matchedCardsContainer.appendChild(matchedCard);
+
+
                 //Hvis brukeren har nådd maksimalt antall likte profiler
                 if (likedProfiles.length > 10) {
                     alert('Du har likt for mange profiler.Vennligst slett noen profiler fra oversikten.');
@@ -131,6 +137,42 @@
                 fetchRandomProfile();
 
             }
+
+            // Funksjon for å lage HTML-element for matched profile
+            function createMatchedCardElement(profile) {
+                const matchedCard = document.createElement('div');
+                matchedCard.classList.add('matched-card');
+
+                const location = document.createElement('p');
+                location.classList.add('matched-location');
+                location.textContent = `${profile.location.city}, ${profile.location.country}`;
+                matchedCard.appendChild(location);
+
+                const name = document.createElement('p');
+                name.classList.add('matched-name');
+                name.textContent = `${profile.name.first} ${profile.name.last}`;
+                matchedCard.appendChild(name);
+
+                const img = document.createElement('img');
+                img.src = profile.picture.large;
+                img.alt = "Matched Bilde";
+                matchedCard.appendChild(img);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Slett';
+                deleteButton.addEventListener('click', () => deleteProfile(profile));
+                matchedCard.appendChild(deleteButton);
+
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Rediger';
+                editButton.addEventListener('click', () => editProfile(profile));
+                matchedCard.appendChild(editButton);
+
+                setBorderStyles(matchedCard, profile.gender); // Sett border basert på kjønn
+
+                return matchedCard;
+            }
+
             // Funksjon for å vise likte profiler
             function renderLikedProfiles() {
                 const likedProfilesList = document.getElementById('liked-profiles-list');
