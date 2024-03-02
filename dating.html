@@ -62,7 +62,7 @@
             let currentProfile;
             let currentGenderFilter = '';
 
-            //Funksjon for å endre border basert på kjønn - Denne funker ikke enda... Kløøøøør meg i hodet av den. 
+            //Funksjon for å endre border basert på kjønn. 
             function setBorderStyles(profileCard, gender) {
                 if (gender === 'male') {
                     profileCard.style.border = '4px solid #5f535c';
@@ -164,7 +164,6 @@
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'ArrowLeft') {
                     swipeLeft();
-                    decreaseScore();
 
                 } else if (event.key === 'ArrowRight') {
                     swipeRight(currentProfile); //?
