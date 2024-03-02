@@ -48,13 +48,25 @@
             <div class="matched-cards">
                 <div class="image-grid">
 
-                    <!--Her må det legges til flere bilder etter vi har koblet til API-->
+                  
                 </div>
             </div>
 
-        </div>
+     
+        
+        <!----Redigering av profil-->
+        <form id="edit-profile-form" style="display: none;">
+            <label for="edit-name">Navn:</label>
+            <input type="text" id="edit-name" required>
+            <label for="edit-age">Alder:</label>
+            <input type="number" id="edit-age" required>
+            <label for="edit-location">Bosted:</label>
+            <input type="text" id="edit-location" required>
+            <button id="confirm-edit">Bekreft endringer</button>
+        </form>
+           </div>
 
-        <script>
+        <script> 
 
             // score og liked profiles
             let score = 10;
@@ -165,7 +177,7 @@
 
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Rediger';
-                editButton.addEventListener('click', () => editProfile(profile));
+                editButton.addEventListener('click', () => showEditForm(profile));
                 matchedCard.appendChild(editButton);
 
                 setBorderStyles(matchedCard, profile.gender); // Sett border basert på kjønn
@@ -224,19 +236,33 @@
             fetchRandomProfile();
 
             // Funksjon for å sjekke om brukeren er tom for poeng
-            function checkScore() {
-                if (score <= 0) {
-                    let answer = false
-                    while (!answer) {
-                        answer = confirm('Har du lyst til å swipe mer? Ja/Nei');
-                        if (answer) {
-                            score = 10;
-                            updateScoreDisplay();
-                            break;
-                        }
+          function askForMoreSwipes() {
+            return new Promise(resolve => {
+                let answer = false;
+                while (!answer) {
+                    answer = confirm('Har du lyst tli å swipe mer? Ja/Nei');
+                    if (answer) {
+                        resolve(true); //Brukeren vil fortsette å swipe
+                    
                     }
                 }
+            })
+
+          }
+
+          //legge til profil i likte profiler
+          function swipeRight(profile) {
+            if (likedProfiles.lenght >= 10) {
+                alert('Du har allerede likt 10 profiler. Vennligst slett noen profiler før du liker flere');
+                return;
             }
+            
+          }
+
+
+
+
+
 
             //Funksjon for å oppdatere score-display
             function updateScoreDisplay() {
@@ -250,6 +276,62 @@
                 updateScoreDisplay();
                 checkScore(); //sjekker om brukeren ikke har mer poeng
             }
+// Redigering av profiler
+function showEditForm(profile) {
+    const editForm = document.getElementById('edit-profile-form');
+    editForm.style.display = 'block';
+
+    const editNameInput = document.getElementById('edit-name');
+    const editAgeInput = document.getElementById('edit-age');
+    const editLocationInput = document.getElementById('edit-location');
+
+    editNameInput.value = `${profile.name.first} ${profile.name.last}`;
+    editAgeInput.value = profile.dob.age;
+    editLocationInput.value = `${profile.location.city}, ${profile.location.country} `;
+
+    //lyttere for bekreftelsesknappen
+    const confirmButton = document.getElementById('confirm-edit');
+    confirmButton.addEventListener('click', () => confirmEdit(profile));
+
+
+
+//innsending av skjema
+editForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const newName = editNameInput.value.trim();
+    const newAge = parseInt(editAgeInput.value);
+    const newLocation = editLocationInput.value.trim();
+
+    console.log('New name:', newName);
+    console.log('New age:', newAge);
+    console.log('New location:', newLocation);
+
+    //opppdatere profilinfo
+    profile.name = {
+        first: newName.split(' ')[0],
+        last: newName.split(' ')[1],
+
+    };
+    profile.dob.age = newAge;
+    [profile.location.city, profile.location.country] = newLocation.split(', ');
+
+
+
+ //oppdater visning
+ display(profile);
+
+
+//oppdater oversiktslisten
+renderLikedProfiles();
+
+//oppdater localStorage
+localStorage.setItem('likedProfiles', JSON.stringify(likedProfiles));
+
+//funksjon for å skjule redigerings-skjema
+editForm.style.display = 'none';
+
+});
+ }           
         </script>
 </body>
 
