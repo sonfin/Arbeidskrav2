@@ -302,7 +302,8 @@
       function displayBreedsAndOwners(breed) {
         let cards = "";
         for (let index = 0; index < breed.length; index++) {
-          const owner = owners[index];
+          const randomOwnerIndex = Math.floor(Math.random() * owners.length);
+          const owner = owners[randomOwnerIndex];
           cards += `
               <div class="card">
                 <div class="image-container">
