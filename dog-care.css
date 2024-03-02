@@ -63,10 +63,10 @@ nav {
 /* cards styling */
 #dog-care-cards {
   display: grid;
-  grid: 1fr 1fr/ 1fr 1fr;
+  grid: auto/ 500px 500px;
   place-content: center;
-  gap: 40px;
-  margin: 100px 150px;
+  gap: 50px;
+  margin: 100px auto;
 }
 .card img {
   width: 100%;
@@ -92,7 +92,7 @@ nav {
   border-radius: 8px;
   padding: 40px;
   /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.071);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(15.6px);
