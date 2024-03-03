@@ -58,8 +58,6 @@
             <form id="edit-profile-form" style="display: none;">
                 <label for="edit-name">Navn:</label>
                 <input type="text" id="edit-name" required>
-                <label for="edit-age">Alder:</label>
-                <input type="number" id="edit-age" required>
                 <label for="edit-location">Bosted:</label>
                 <input type="text" id="edit-location" required>
                 <button id="confirm-edit">Bekreft endringer</button>
@@ -73,6 +71,7 @@
             let likedProfiles = [];
             let currentProfile;
             let currentGenderFilter = '';
+            let currentMatchedCard;
 
             //Funksjon for å endre border basert på kjønn. 
             function setBorderStyles(profileCard, gender) {
@@ -137,6 +136,7 @@
                 // Appende de matchede kortene til matched cards container
                 const matchedCardsContainer = document.querySelector('.matched-cards .image-grid');
                 const matchedCard = createMatchedCardElement(profile);
+                currentMatchedCard = matchedCard;
                 matchedCardsContainer.appendChild(matchedCard);
 
 
@@ -262,22 +262,43 @@
                 updateScoreDisplay();
                 checkScore(); //sjekker om brukeren ikke har mer poeng
             }
+
+            // Prøve å endre matched cards her!
+            function confirmEdit(profile, matchedCard) {
+                const editNameInput = document.getElementById('edit-name');
+                const editLocationInput = document.getElementById('edit-location');
+
+                const newName = editNameInput.value.trim();
+                const newLocation = editLocationInput.value.trim();
+
+                // Oppdatere matched card innhold
+                matchedCard.querySelector('.matched-name').textContent = newName;
+                matchedCard.querySelector('.matched-location').textContent = newLocation;
+
+                renderLikedProfiles();
+
+                localStorage.setItem('likedProfiles', JSON.stringify(likedProfiles));
+
+                const editForm = document.getElementById('edit-profile-form');
+                editForm.style.display = 'none';
+            }
+
+
+
             // Redigering av profiler
             function showEditForm(profile) {
                 const editForm = document.getElementById('edit-profile-form');
                 editForm.style.display = 'block';
 
                 const editNameInput = document.getElementById('edit-name');
-                const editAgeInput = document.getElementById('edit-age');
                 const editLocationInput = document.getElementById('edit-location');
 
                 editNameInput.value = `${profile.name.first} ${profile.name.last}`;
-                editAgeInput.value = profile.dob.age;
                 editLocationInput.value = `${profile.location.city}, ${profile.location.country} `;
 
                 //lyttere for bekreftelsesknappen
                 const confirmButton = document.getElementById('confirm-edit');
-                confirmButton.addEventListener('click', () => confirmEdit(profile));
+                confirmButton.addEventListener('click', () => confirmEdit(profile, currentMatchedCard));
 
 
 
@@ -285,23 +306,10 @@
                 editForm.addEventListener('submit', (event) => {
                     event.preventDefault();
                     const newName = editNameInput.value.trim();
-                    const newAge = parseInt(editAgeInput.value);
                     const newLocation = editLocationInput.value.trim();
 
-                    console.log('New name:', newName);
-                    console.log('New age:', newAge);
-                    console.log('New location:', newLocation);
-
                     //opppdatere profilinfo
-                    profile.name = {
-                        first: newName.split(' ')[0],
-                        last: newName.split(' ')[1],
 
-                    };
-                    profile.dob.age = newAge;
-                    [profile.location.city, profile.location.country] = newLocation.split(', ');
-
-                    console.log('Update profile:', profile);
 
                     //oppdater visning
                     display(profile);
