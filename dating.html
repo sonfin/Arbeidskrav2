@@ -158,15 +158,20 @@
                 const matchedCard = document.createElement('div');
                 matchedCard.classList.add('matched-card');
 
+                const name = document.createElement('p');
+                name.classList.add('matched-name');
+                name.textContent = `${profile.name.first} ${profile.name.last}`;
+                matchedCard.appendChild(name);
+
                 const location = document.createElement('p');
                 location.classList.add('matched-location');
                 location.textContent = `${profile.location.city}, ${profile.location.country}`;
                 matchedCard.appendChild(location);
 
-                const name = document.createElement('p');
-                name.classList.add('matched-name');
-                name.textContent = `${profile.name.first} ${profile.name.last}`;
-                matchedCard.appendChild(name);
+                const age = document.createElement('p');
+                age.classList.add('matched-age');
+                age.textContent = `${profile.dob.age} År`;
+                matchedCard.appendChild(age);
 
                 const img = document.createElement('img');
                 img.src = profile.picture.large;
@@ -190,20 +195,13 @@
 
             // Funksjon for å vise likte profiler
             function renderLikedProfiles() {
-                const likedProfilesList = document.getElementById('liked-profiles-list');
-                likedProfilesList.innerHTML = ''; //tøm listen før oppdatering
+                const matchedCardsContainer = document.querySelector('.matched-cards .image-grid');
+                matchedCardsContainer.innerHTML = ''; // Slette innehold før oppdatering
+
                 likedProfiles.forEach(profile => {
-                    const li = document.createElement('li');
-                    li.textContent = `${profile.name.first} ${profile.name.last}`;
-                    //sletteknapp
-                    const deleteButton = document.createElement('button');
-                    deleteButton.addEventListener('click', () => deleteProfile(profile));
-                    li.appendChild(deleteButton);
-                    likedProfilesList.appendChild(li);
-
+                    const matchedCard = createMatchedCardElement(profile);
+                    matchedCardsContainer.appendChild(matchedCard);
                 });
-
-
             }
 
             //Slette profil fra likte profiler
@@ -276,14 +274,29 @@
                 const newAge = parseInt(editAgeInput.value);
                 const newLocation = editLocationInput.value.trim();
 
-                // Oppdatere matched kort innhold 
-                matchedCard.querySelector('.matched-name').textContent = `${newName}, ${newAge} År`;
+                // Oppdatere matched card innhold
+                matchedCard.querySelector('.matched-name').textContent = newName;
+                matchedCard.querySelector('.matched-age').textContent = `${newAge} År`;
                 matchedCard.querySelector('.matched-location').textContent = newLocation;
 
-                renderLikedProfiles();
 
-                localStorage.setItem('likedProfiles', JSON.stringify(likedProfiles));
+                // Oppdatere likedProfiles arrayet
+                const index = likedProfiles.indexOf(profile);
+                if (index !== -1) {
+                    likedProfiles[index] = {
+                        ...profile,
+                        name: { ...profile.name, first: newName, last: '' },
+                        dob: { ...profile.dob, age: newAge },
+                        location: { ...profile.location, city: newLocation.split(',')[0], country: newLocation.split(',')[1] }
+                    };
 
+                    // Lagre oppdaterte likedProfiles til localstorage 
+                    localStorage.setItem('likedProfiles', JSON.stringify(likedProfiles));
+
+                    renderLikedProfiles();
+                }
+
+                // Skjul edit skjema 
                 const editForm = document.getElementById('edit-profile-form');
                 editForm.style.display = 'none';
             }
