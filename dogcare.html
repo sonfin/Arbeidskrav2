@@ -55,8 +55,8 @@
     <footer></footer>
     <script>
       //Henter inn knapp og div til å vise kort i
-      let dogCareCards = document.getElementById("dog-care-cards");
-      const showNewCardsBtn = document.getElementById("show-new-cards-btn");
+      let dogCareCards = document.querySelector("#dog-care-cards");
+      const showNewCardsBtn = document.querySelector("#show-new-cards-btn");
       showNewCardsBtn.addEventListener("click", initializeDogsAndOwners);
 
       let dogs = [];
@@ -105,32 +105,34 @@
 
       //Funksjon for å lage kort med data fra dogs og owners
       function displayDogsAndOwners() {
-        let cards = "";
-        for (let index = 0; index < 10; index++) {
-          const owner = owners[index];
-          const dog = dogs[index];
-          cards += `
-              <div class="card">
+    let cards = "";
+    for (let index = 0; index < 10; index++) {
+        const owner = owners[index];
+        const dog = dogs[index];
+        cards += `
+            <div class="card">
                 <div class="image-container">
-                  <img src="${dogs[index]}" alt="hund">
+                    <img src="${dogs[index]}" alt="hund">
                 </div>
                 <div class="image-container">
-                  <img src="${owner.picture.large}" alt="eier">
+                    <img src="${owner.picture.large}" alt="eier">
                 </div>
                 <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
                 <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
-                <button id="delete-btn" class="btn" onclick="deleteCard(${index})">✖ Slett</button>
-                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
-              </div>`;
-        }
-        dogCareCards.innerHTML = cards;
+                <button id="delete-btn" class="btn delete-btn">✖ Slett</button>
+                <button id="chat-btn" class="btn chat-btn">💬 Chat</button>
+            </div>`;
+    }
+    dogCareCards.innerHTML = cards;
 
-        // Event listener for hvert kort til dogGreeting
-        const cardElements = document.querySelectorAll(".card");
-        cardElements.forEach((card, index) => {
-          card.addEventListener("click", () => dogGreeting(card));
-        });
-      }
+    const cardElements = document.querySelectorAll(".card");
+    cardElements.forEach((card, index) => {
+        card.querySelector(".delete-btn").addEventListener("click", () => deleteCard(index));
+        card.querySelector(".chat-btn").addEventListener("click", () => chatBox(index));
+        card.addEventListener("click", () => dogGreeting(card));
+    });
+}
+
 
       //Funksjon for å hente inn nytt kort
       async function getNewDogAndOwner() {
@@ -171,8 +173,8 @@
 
       // OPPGAVE 4
       // Nye arrays til de forskellige hunderasebildene
-      const openMenu = document.getElementById("open-breeds-menu");
-      openMenu.onclick = toggleMenu;
+      const openMenu = document.querySelector("#open-breeds-menu");
+      openMenu.addEventListener("click", toggleMenu);
       let breed0 = [];
       let breed1 = [];
       let breed2 = [];
@@ -212,7 +214,9 @@
           menu.textContent = `${uniqueBreeds[i]}`;
           menu.id = `breed-${i}`;
           menu.className = "btn";
-          menu.onclick = () => showBreed(uniqueBreeds[i], i);
+          menu.addEventListener("click", () => {
+            showBreed(uniqueBreeds[i], i);
+          });
 
           const btnTxt = menu.textContent;
           const word = btnTxt.split(" ");
@@ -310,22 +314,25 @@
           const randomOwnerIndex = Math.floor(Math.random() * owners.length);
           const owner = owners[randomOwnerIndex];
           cards += `
-              <div class="card">
+            <div class="card">
                 <div class="image-container">
-                  <img src="${breed[index]}" alt="hund">
+                    <img src="${breed[index]}" alt="hund">
                 </div>
                 <div class="image-container">
-                  <img src="${owner.picture.large}" alt="eier">
+                    <img src="${owner.picture.large}" alt="eier">
                 </div>
                 <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
                 <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
-                
-                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
-              </div>`;
+                <button id="chat-btn-${index}" class="btn">💬 Chat</button>
+            </div>`;
         }
         dogCareCards.innerHTML = cards;
 
-        // Event listener for hvert kort til dogGreeting
+        for (let index = 0; index < breed.length; index++) {
+          const chatButton = document.getElementById(`chat-btn-${index}`);
+          chatButton.addEventListener("click", () => chatBox(index));
+        }
+
         const cardElements = document.querySelectorAll(".card");
         cardElements.forEach((card, index) => {
           card.addEventListener("click", () => dogGreeting(card));
@@ -333,15 +340,15 @@
       }
 
       //oppgave 5.1
-      const closeBtn = document.getElementById("close-button");
-      const ownerImg = document.getElementById("owner-picture");
-      const ownerName = document.getElementById("owner-name");
+      const closeBtn = document.querySelector("#close-button");
+      const ownerImg = document.querySelector("#owner-picture");
+      const ownerName = document.querySelector("#owner-name");
       const chatTextInput = document.querySelector(".chat-text-input");
-      const ownerLocation = document.getElementById("owner-location");
+      const ownerLocation = document.querySelector("#owner-location");
       let chatOpen = false;
       let firstText = true;
 
-      closeBtn.onclick = closeChat;
+      closeBtn.addEventListener("click", closeChat);
 
       // Funksjon for å åpne chat
       function chatBox(index) {
@@ -449,9 +456,9 @@
           const deleteIcon = document.createElement("span");
           deleteIcon.innerHTML = "❎";
           deleteIcon.className = "delete-icon";
-          deleteIcon.onclick = function () {
-            messageDiv.remove(); 
-          };
+          deleteIcon.addEventListener("click", () => {
+            messageDiv.remove();
+          });
           messageDiv.insertBefore(deleteIcon, messageDiv.firstChild);
         }
         chatMessages.appendChild(messageDiv);
@@ -488,7 +495,7 @@
         }
 
         const dogGreetingBubble = document.createElement("div");
-        dogGreetingBubble.classList.add("dog-greeting-bubble");
+        dogGreetingBubble.className = "dog-greeting-bubble";
         dogGreetingBubble.innerHTML = `
               <div class="dog-icon">
                 <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
