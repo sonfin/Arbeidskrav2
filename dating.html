@@ -131,10 +131,22 @@
 
             //Funksjon for å legge til profilen i likte profiler
             function swipeRight(profile) {
+                //Sjekk om brukeren har nådd maksimalt antall likte profiler
+                if (likedProfiles.length >= 10) {
+                    alert('Du har likt for mange profiler. Vennligst slett noen profiler fra oversikten.');
+                    return;
+                }
+
+                // Redusere score, men passe på at score ikke går under 0
+                if (score > 0) {
+                    score--;
+                    updateScoreDisplay();
+                }
+
                 likedProfiles.push(profile);
                 localStorage.setItem('likedProfiles', JSON.stringify(likedProfiles));
-                score--;
-                updateScoreDisplay();
+
+
 
                 // Appende de matchede kortene til matched cards container
                 const matchedCardsContainer = document.querySelector('.matched-cards .image-grid');
@@ -142,12 +154,6 @@
                 currentMatchedCard = matchedCard;
                 matchedCardsContainer.appendChild(matchedCard);
 
-
-                //Hvis brukeren har nådd maksimalt antall likte profiler
-                if (likedProfiles.length > 10) {
-                    alert('Du har likt for mange profiler.Vennligst slett noen profiler fra oversikten.');
-
-                }
                 //Hent og vis tilfeldig profil
                 fetchRandomProfile();
 
@@ -210,8 +216,14 @@
                 if (index !== -1) {
                     likedProfiles.splice(index, 1);
                     localStorage.setItem('likedProfiles', JSON.stringify(likedProfiles));
-                    renderLikedProfiles();
 
+                    // Passe på at score er totalt max 10
+                    if (score < 10) {
+                        score++;
+                        updateScoreDisplay();
+                    }
+
+                    renderLikedProfiles();
                 }
             }
 
