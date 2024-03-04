@@ -172,7 +172,7 @@
       // OPPGAVE 4
       // Nye arrays til de forskellige hunderasebildene
       const openMenu = document.querySelector("#open-breeds-menu");
-      openMenu.onclick = toggleMenu;
+      openMenu.addEventListener("click", toggleMenu);
       let breed0 = [];
       let breed1 = [];
       let breed2 = [];
@@ -212,7 +212,9 @@
           menu.textContent = `${uniqueBreeds[i]}`;
           menu.id = `breed-${i}`;
           menu.className = "btn";
-          menu.onclick = () => showBreed(uniqueBreeds[i], i);
+          menu.addEventListener("click", () => {
+            showBreed(uniqueBreeds[i], i);
+          });
 
           const btnTxt = menu.textContent;
           const word = btnTxt.split(" ");
@@ -341,7 +343,7 @@
       let chatOpen = false;
       let firstText = true;
 
-      closeBtn.onclick = closeChat;
+      closeBtn.addEventListener("click", closeChat);
 
       // Funksjon for å åpne chat
       function chatBox(index) {
@@ -449,9 +451,9 @@
           const deleteIcon = document.createElement("span");
           deleteIcon.innerHTML = "❎";
           deleteIcon.className = "delete-icon";
-          deleteIcon.onclick = function () {
-            messageDiv.remove(); 
-          };
+          deleteIcon.addEventListener("click", () => {
+            messageDiv.remove();
+          });
           messageDiv.insertBefore(deleteIcon, messageDiv.firstChild);
         }
         chatMessages.appendChild(messageDiv);
