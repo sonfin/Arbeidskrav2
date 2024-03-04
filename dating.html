@@ -89,7 +89,7 @@
 
             //Funksjon som oppdaterer visning av scoret
             function updateScoreDisplay() {
-                const scoreDisplay = document.getElementById('score');
+                const scoreDisplay = document.querySelector('#score');
                 scoreDisplay.textContent = score;
             }
 
@@ -227,9 +227,10 @@
             })
 
             // Lyttere for filtreringsknapper
-            document.getElementById('kvinner-btn').addEventListener('click', () => fetchRandomProfile('female'));
-            document.getElementById('menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
-            document.getElementById('begge-btn').addEventListener('click', () => fetchRandomProfile(''));
+            document.querySelector('#kvinner-btn').addEventListener('click', () => fetchRandomProfile('female'));
+            document.querySelector('#menn-btn').addEventListener('click', () => fetchRandomProfile('male'));
+            document.querySelector('#begge-btn').addEventListener('click', () => fetchRandomProfile(''));
+
 
 
 
@@ -253,7 +254,7 @@
 
             //Funksjon for å oppdatere score-display
             function updateScoreDisplay() {
-                const scoreDisplay = document.getElementById('score-value');
+                const scoreDisplay = document.querySelector('#score-value');
                 scoreDisplay.textContent = score;
             }
 
@@ -266,9 +267,9 @@
 
             // Prøve å endre matched cards her!
             function confirmEdit(profile, matchedCard) {
-                const editNameInput = document.getElementById('edit-name');
-                const editAgeInput = document.getElementById('edit-age');
-                const editLocationInput = document.getElementById('edit-location');
+                const editNameInput = document.querySelector('#edit-name');
+                const editAgeInput = document.querySelector('#edit-age');
+                const editLocationInput = document.querySelector('#edit-location');
 
                 const newName = editNameInput.value.trim();
                 const newAge = parseInt(editAgeInput.value);
@@ -297,7 +298,7 @@
                 }
 
                 // Skjul edit skjema 
-                const editForm = document.getElementById('edit-profile-form');
+                const editForm = document.querySelector('#edit-profile-form');
                 editForm.style.display = 'none';
             }
 
@@ -305,19 +306,19 @@
 
             // Redigering av profiler
             function showEditForm(profile) {
-                const editForm = document.getElementById('edit-profile-form');
+                const editForm = document.querySelector('#edit-profile-form');
                 editForm.style.display = 'block';
 
-                const editNameInput = document.getElementById('edit-name');
-                editAgeInput = document.getElementById('edit-age');
-                const editLocationInput = document.getElementById('edit-location');
+                const editNameInput = document.querySelector('#edit-name');
+                editAgeInput = document.querySelector('#edit-age');
+                const editLocationInput = document.querySelector('#edit-location');
 
                 editNameInput.value = `${profile.name.first} ${profile.name.last}`;
                 editAgeInput.value = profile.dob.age;
                 editLocationInput.value = `${profile.location.city}, ${profile.location.country} `;
 
                 //lyttere for bekreftelsesknappen
-                const confirmButton = document.getElementById('confirm-edit');
+                const confirmButton = document.querySelector('#confirm-edit');
                 confirmButton.addEventListener('click', () => confirmEdit(profile, currentMatchedCard));
 
 
