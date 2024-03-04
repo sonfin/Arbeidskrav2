@@ -253,16 +253,19 @@
             function checkScore() {
                 if (score <= 0) {
                     let answer = false
-                    while (!answer) {
-                        answer = confirm('Har du lyst til å swipe mer? Ja/Nei');
-                        if (answer) {
-                            score = 10;
-                            updateScoreDisplay();
-                            break;
+                    setTimeout(() => {
+                        while (!answer) {
+                            answer = confirm('Har du lyst til å swipe mer? Ja/Nei');
+                            if (answer) {
+                                score = 10;
+                                updateScoreDisplay();
+                                break;
+                            }
                         }
-                    }
+                    }, 200);
                 }
             }
+
 
             //Funksjon for å oppdatere score-display
             function updateScoreDisplay() {
