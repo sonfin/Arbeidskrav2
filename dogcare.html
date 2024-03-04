@@ -55,8 +55,8 @@
     <footer></footer>
     <script>
       //Henter inn knapp og div til å vise kort i
-      let dogCareCards = document.getElementById("dog-care-cards");
-      const showNewCardsBtn = document.getElementById("show-new-cards-btn");
+      let dogCareCards = document.querySelector("#dog-care-cards");
+      const showNewCardsBtn = document.querySelector("#show-new-cards-btn");
       showNewCardsBtn.addEventListener("click", initializeDogsAndOwners);
 
       let dogs = [];
@@ -171,7 +171,7 @@
 
       // OPPGAVE 4
       // Nye arrays til de forskellige hunderasebildene
-      const openMenu = document.getElementById("open-breeds-menu");
+      const openMenu = document.querySelector("#open-breeds-menu");
       openMenu.onclick = toggleMenu;
       let breed0 = [];
       let breed1 = [];
@@ -333,11 +333,11 @@
       }
 
       //oppgave 5.1
-      const closeBtn = document.getElementById("close-button");
-      const ownerImg = document.getElementById("owner-picture");
-      const ownerName = document.getElementById("owner-name");
+      const closeBtn = document.querySelector("#close-button");
+      const ownerImg = document.querySelector("#owner-picture");
+      const ownerName = document.querySelector("#owner-name");
       const chatTextInput = document.querySelector(".chat-text-input");
-      const ownerLocation = document.getElementById("owner-location");
+      const ownerLocation = document.querySelector("#owner-location");
       let chatOpen = false;
       let firstText = true;
 
