@@ -292,38 +292,40 @@
         }
         console.log(breed, index);
         if (index === 0) {
-          displayBreedsAndOwners(breed0);
+          displayBreedsAndOwners(breed0, index);
         } else if (index === 1) {
-          displayBreedsAndOwners(breed1);
+          displayBreedsAndOwners(breed1, index);
         } else if (index === 2) {
-          displayBreedsAndOwners(breed2);
+          displayBreedsAndOwners(breed2, index);
         } else if (index === 3) {
-          displayBreedsAndOwners(breed3);
+          displayBreedsAndOwners(breed3, index);
         } else if (index === 4) {
-          displayBreedsAndOwners(breed4);
+          displayBreedsAndOwners(breed4, index);
         }
       }
 
       // KUN FOR TEST!!
 
       function displayBreedsAndOwners(breed) {
+        // Create a shuffled copy of the owners array
+        const shuffledOwners = shuffleArray(owners);
+
         let cards = "";
         for (let index = 0; index < breed.length; index++) {
-          const randomOwnerIndex = Math.floor(Math.random() * owners.length);
-          const owner = owners[randomOwnerIndex];
+          const owner = shuffledOwners[index]; // Access owner from the shuffled array
           cards += `
-              <div class="card">
+            <div class="card">
                 <div class="image-container">
-                  <img src="${breed[index]}" alt="hund">
+                    <img src="${breed[index]}" alt="hund">
                 </div>
                 <div class="image-container">
-                  <img src="${owner.picture.large}" alt="eier">
+                    <img src="${owner.picture.large}" alt="eier">
                 </div>
                 <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
                 <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
                 
                 <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
-              </div>`;
+            </div>`;
         }
         dogCareCards.innerHTML = cards;
 
@@ -332,6 +334,19 @@
         cardElements.forEach((card, index) => {
           card.addEventListener("click", () => dogGreeting(card));
         });
+      }
+
+      // Function to shuffle an array
+      function shuffleArray(array) {
+        const shuffledArray = array.slice(); // Create a copy of the original array
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledArray[i], shuffledArray[j]] = [
+            shuffledArray[j],
+            shuffledArray[i],
+          ]; // Swap elements
+        }
+        return shuffledArray;
       }
 
       //oppgave 5.1
@@ -346,13 +361,13 @@
       closeBtn.addEventListener("click", closeChat);
 
       // Funksjon for å åpne chat
-      function chatBox(index) {
+      function chatBox(breedIndex, ownerIndex) {
         if (chatOpen) {
           closeChat();
           return;
         }
-        const owner = owners[index];
-        const dog = dogs[index];
+        const owner = owners[ownerIndex]; // Access owner using the ownerIndex
+        const dog = dogs[breedIndex];
         chatOpen = true;
         const chatDiv = document.querySelector(".chat-box");
         chatDiv.style.display = "flex";
@@ -374,6 +389,7 @@
           });
         }
       }
+
       // Funksjon for å lukke chat.
       function closeChat() {
         chatOpen = false;
