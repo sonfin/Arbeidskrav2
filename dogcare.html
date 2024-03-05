@@ -110,22 +110,29 @@
           const owner = owners[index];
           const dog = dogs[index];
           cards += `
-              <div class="card">
-                <div class="image-container">
-                  <img src="${dogs[index]}" alt="hund">
-                </div>
-                <div class="image-container">
-                  <img src="${owner.picture.large}" alt="eier">
-                </div>
-                <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
-                <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
-                <button id="delete-btn" class="btn" onclick="deleteCard(${index})">✖ Slett</button>
-                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
-              </div>`;
+        <div class="card" id="card-${index}">
+          <div class="image-container">
+            <img src="${dogs[index]}" alt="hund">
+          </div>
+          <div class="image-container">
+            <img src="${owner.picture.large}" alt="eier">
+          </div>
+          <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
+          <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
+          <button id="delete-btn-${index}" class="btn">✖ Slett</button>
+          <button id="chat-btn-${index}" class="btn">💬 Chat</button>
+        </div>`;
         }
         dogCareCards.innerHTML = cards;
 
-        // Event listener for hvert kort til dogGreeting
+        for (let index = 0; index < 10; index++) {
+          const deleteBtn = document.querySelector(`#delete-btn-${index}`);
+          deleteBtn.addEventListener("click", () => deleteCard(index));
+
+          const chatBtn = document.querySelector(`#chat-btn-${index}`);
+          chatBtn.addEventListener("click", () => chatBox(index));
+        }
+
         const cardElements = document.querySelectorAll(".card");
         cardElements.forEach((card, index) => {
           card.addEventListener("click", () => dogGreeting(card));
@@ -172,7 +179,8 @@
       // OPPGAVE 4
       // Nye arrays til de forskellige hunderasebildene
       const openMenu = document.querySelector("#open-breeds-menu");
-      openMenu.onclick = toggleMenu;
+      openMenu.addEventListener("click", toggleMenu);
+
       let breed0 = [];
       let breed1 = [];
       let breed2 = [];
@@ -205,14 +213,16 @@
         }
         const uniqueBreeds = uniqueDogs();
 
-        // Lager her 5 knapper med navn, id, klasse og onclick.
+        // Lager her 5 knapper med navn, id, klasse og addEventListener.
         for (let i = 0; i < uniqueBreeds.length; i++) {
           const menu = document.createElement("button");
           document.querySelector(".random-breeds").appendChild(menu);
           menu.textContent = `${uniqueBreeds[i]}`;
           menu.id = `breed-${i}`;
           menu.className = "btn";
-          menu.onclick = () => showBreed(uniqueBreeds[i], i);
+          menu.addEventListener("click", () => {
+            showBreed(uniqueBreeds[i], i);
+          });
 
           const btnTxt = menu.textContent;
           const word = btnTxt.split(" ");
@@ -310,22 +320,26 @@
           const randomOwnerIndex = Math.floor(Math.random() * owners.length);
           const owner = owners[randomOwnerIndex];
           cards += `
-              <div class="card">
-                <div class="image-container">
-                  <img src="${breed[index]}" alt="hund">
-                </div>
-                <div class="image-container">
-                  <img src="${owner.picture.large}" alt="eier">
-                </div>
-                <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
-                <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
-                
-                <button id="chat-btn" class="btn" onclick="chatBox(${index})">💬 Chat</button>
-              </div>`;
+        <div class="card" id="card-${index}">
+          <div class="image-container">
+            <img src="${breed[index]}" alt="hund">
+          </div>
+          <div class="image-container">
+            <img src="${owner.picture.large}" alt="eier">
+          </div>
+          <p><b>Eier:</b> ${owner.name.first} ${owner.name.last}</p>
+          <p><b>Bosted:</b> ${owner.location.city}, ${owner.location.state}</p>
+          
+          <button id="chat-btn-${index}" class="btn">💬 Chat</button>
+        </div>`;
         }
         dogCareCards.innerHTML = cards;
 
-        // Event listener for hvert kort til dogGreeting
+        for (let index = 0; index < breed.length; index++) {
+          const chatBtn = document.querySelector(`#chat-btn-${index}`);
+          chatBtn.addEventListener("click", () => chatBox(index));
+        }
+
         const cardElements = document.querySelectorAll(".card");
         cardElements.forEach((card, index) => {
           card.addEventListener("click", () => dogGreeting(card));
@@ -341,7 +355,7 @@
       let chatOpen = false;
       let firstText = true;
 
-      closeBtn.onclick = closeChat;
+      closeBtn.addEventListener("click", closeChat);
 
       // Funksjon for å åpne chat
       function chatBox(index) {
@@ -449,9 +463,9 @@
           const deleteIcon = document.createElement("span");
           deleteIcon.innerHTML = "❎";
           deleteIcon.className = "delete-icon";
-          deleteIcon.onclick = function () {
-            messageDiv.remove(); 
-          };
+          deleteIcon.addEventListener("click", () => {
+            messageDiv.remove();
+          });
           messageDiv.insertBefore(deleteIcon, messageDiv.firstChild);
         }
         chatMessages.appendChild(messageDiv);
@@ -474,11 +488,12 @@
         "WRAFF!!!",
       ];
       function dogGreeting(card) {
+        const deleteBtnIdPrefix = "delete-btn-";
+        const chatBtnIdPrefix = "chat-btn-";
         if (
-          event.target.id === "delete-btn" ||
-          event.target.id === "chat-btn"
+          event.target.id.startsWith(deleteBtnIdPrefix) ||
+          event.target.id.startsWith(chatBtnIdPrefix)
         ) {
-          //gjør at funksjonen stopper hvis bruker klikker på sletteknappen og chatknappen
           return;
         }
 
@@ -490,20 +505,18 @@
         const dogGreetingBubble = document.createElement("div");
         dogGreetingBubble.className = "dog-greeting-bubble";
         dogGreetingBubble.innerHTML = `
-              <div class="dog-icon">
-                <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
-              </div>
-              <div class="dog-greeting-text">
-                <p>${
-                  dogSounds[Math.floor(Math.random() * dogSounds.length)]
-                }</p>
-              </div>
-              `;
+          <div class="dog-icon">
+            <img src="/dogcare-assets/ dog-icon.png" alt="dog icon">
+          </div>
+          <div class="dog-greeting-text">
+            <p>${dogSounds[Math.floor(Math.random() * dogSounds.length)]}</p>
+          </div>
+          `;
         card.appendChild(dogGreetingBubble);
 
         if (dogGreetingBubble) {
           dogGreetingBubble.addEventListener("click", (event) => {
-            event.stopPropagation(); // gjør at dogGreetingCard ikke trigges igjen https://www.w3schools.com/jsref/event_stoppropagation.asp
+            event.stopPropagation();
             dogGreetingBubble.remove();
           });
         }
