@@ -54,20 +54,19 @@
     </main>
     <footer></footer>
     <script>
-      //Henter inn knapp og div til å vise kort i
-      let dogCareCards = document.querySelector("#dog-care-cards");
-      const showNewCardsBtn = document.querySelector("#show-new-cards-btn");
-      showNewCardsBtn.addEventListener("click", initializeDogsAndOwners);
+     
 
+      //GLOBALE VARIABLER
       let dogs = [];
       let owners = [];
       let breeds = [];
       let breedsArray = [];
 
+      //FETCH, INITIALISERE OG ERROR HÅNDTERING
       //Funksjon for å hente inn 10 random hunde bilder
       async function getDogs() {
         const dogsRequest = await fetch(
-          "https://dog.ceo/api/breeds/image/random/10"
+          "https://dog.ceo/api/breeds/image/random/100"
         );
         const dogsResult = await dogsRequest.json();
         return dogsResult.message;
@@ -84,13 +83,13 @@
       //Funksjon for å hente inn navn, lokasjon og bilde for 10 random brukere
       async function getOwners() {
         const ownersRequest = await fetch(
-          "https://randomuser.me/api/?results=10&inc=name,location,picture"
+          "https://randomuser.me/api/?results=100&inc=name,location,picture"
         );
         const ownersResult = await ownersRequest.json();
         return ownersResult.results;
       }
 
-      //Funksjon for å legge inn date i globale variabler breeds, dogs og owners, samt error håndtering
+      //Funksjon for å legge inn data i globale variabler breeds, dogs og owners, samt error håndtering
       async function initializeDogsAndOwners() {
         try {
           dogs = await getDogs();
@@ -102,6 +101,10 @@
           console.error("Error med å laste innhold", error);
         }
       }
+
+      //OPPGAVE 1
+       //Henter inn div  fra HTML
+      let dogCareCards = document.querySelector("#dog-care-cards");
 
       //Funksjon for å lage kort med data fra dogs og owners
       function displayDogsAndOwners() {
@@ -139,6 +142,12 @@
         });
       }
 
+      //OPPGAVE 2
+      const showNewCardsBtn = document.querySelector("#show-new-cards-btn");
+      showNewCardsBtn.addEventListener("click", initializeDogsAndOwners);
+      //Funksjon for å laste inn/fetche data til det nye kortet.
+
+      //OPPGAVE 3
       //Funksjon for å hente inn nytt kort
       async function getNewDogAndOwner() {
         const newOwnerResult = await fetch("https://randomuser.me/api/");
@@ -168,28 +177,22 @@
         displayDogsAndOwners();
       }
 
-      //Funksjon for å laste inn/fetche data til det nye kortet.
-      //Usikker på om vi trenger dette..
-      async function showNewCards() {
-        await initializeDogsAndOwners();
-      }
-
       initializeDogsAndOwners();
 
       // OPPGAVE 4
-      // Nye arrays til de forskellige hunderasebildene
+      //Henter inn knapp fra HTML og legger til event listener
       const openMenu = document.querySelector("#open-breeds-menu");
       openMenu.addEventListener("click", toggleMenu);
 
+      // Nye arrays til de forskellige hunderasebildene
       let breed0 = [];
       let breed1 = [];
       let breed2 = [];
       let breed3 = [];
       let breed4 = [];
 
+      // Funksjon for å kunne hente inn 5 nye hunderaser, og må da slette de gamle først
       function toggleMenu() {
-        // Funksjon for å kunne hente inn 5 nye hunderaser, og må da slette de gamle først
-
         clearDiv();
         function clearDiv() {
           const randomBreeds = document.querySelector(".random-breeds");
@@ -213,7 +216,7 @@
         }
         const uniqueBreeds = uniqueDogs();
 
-        // Lager her 5 knapper med navn, id, klasse og addEventListener.
+        // Lager her 5 knapper med navn, id, klasse og event listener.
         for (let i = 0; i < uniqueBreeds.length; i++) {
           const menu = document.createElement("button");
           document.querySelector(".random-breeds").appendChild(menu);
@@ -238,11 +241,11 @@
         );
       }
 
-      //Fetch 5 api
+      //Fetch API for å hente ut hunderaser
       function fetchApi(dog0, dog1, dog2, dog3, dog4) {
         async function getBreedZero() {
           const breedZeroRequest = await fetch(
-            `https://dog.ceo/api/breed/${dog0}/images/random/10`
+            `https://dog.ceo/api/breed/${dog0}/images/random/20`
           );
 
           const breedZeroResult = await breedZeroRequest.json();
@@ -250,33 +253,33 @@
         }
         async function getBreedOne() {
           const breedOneRequest = await fetch(
-            `https://dog.ceo/api/breed/${dog1}/images/random/10`
+            `https://dog.ceo/api/breed/${dog1}/images/random/20`
           );
           const breedOneResult = await breedOneRequest.json();
           return breedOneResult.message;
         }
         async function getBreedTwo() {
           const breedTwoRequest = await fetch(
-            `https://dog.ceo/api/breed/${dog2}/images/random/10`
+            `https://dog.ceo/api/breed/${dog2}/images/random/20`
           );
           const breedTwoResult = await breedTwoRequest.json();
           return breedTwoResult.message;
         }
         async function getBreedThree() {
           const breedThreeRequest = await fetch(
-            `https://dog.ceo/api/breed/${dog3}/images/random/10`
+            `https://dog.ceo/api/breed/${dog3}/images/random/20`
           );
           const breedThreeResult = await breedThreeRequest.json();
           return breedThreeResult.message;
         }
         async function getBreedFour() {
           const breedFourRequest = await fetch(
-            `https://dog.ceo/api/breed/${dog4}/images/random/10`
+            `https://dog.ceo/api/breed/${dog4}/images/random/20`
           );
           const breedFourResult = await breedFourRequest.json();
           return breedFourResult.message;
         }
-
+        //Funksjon for å legge inn data i globale variabler breeds, samt error håndtering
         async function initializeBreeds() {
           try {
             breed0 = await getBreedZero();
@@ -291,6 +294,8 @@
         }
         initializeBreeds();
       }
+      
+      //Funksjon for å fjerne eksisterende kort og vise kort for den vagte hunderasen
       function showBreed(breed, index) {
         clearDogCareCards();
         function clearDogCareCards() {
@@ -312,8 +317,7 @@
         }
       }
 
-      // KUN FOR TEST!!
-
+      //Funksjon for å vise hunderasebilder og eier
       function displayBreedsAndOwners(breed) {
         let cards = "";
         for (let index = 0; index < breed.length; index++) {
@@ -335,23 +339,27 @@
         }
         dogCareCards.innerHTML = cards;
 
+        // Add event listeners for chat buttons
         for (let index = 0; index < breed.length; index++) {
           const chatBtn = document.querySelector(`#chat-btn-${index}`);
           chatBtn.addEventListener("click", () => chatBox(index));
         }
 
+        // Event listener for each card to dogGreeting
         const cardElements = document.querySelectorAll(".card");
         cardElements.forEach((card, index) => {
           card.addEventListener("click", () => dogGreeting(card));
         });
       }
 
-      //oppgave 5.1
+      //OPPGAVE 5
+      //Henter inn fra HTML til chat
       const closeBtn = document.querySelector("#close-button");
       const ownerImg = document.querySelector("#owner-picture");
       const ownerName = document.querySelector("#owner-name");
       const chatTextInput = document.querySelector(".chat-text-input");
       const ownerLocation = document.querySelector("#owner-location");
+
       let chatOpen = false;
       let firstText = true;
 
@@ -386,6 +394,7 @@
           });
         }
       }
+
       // Funksjon for å lukke chat.
       function closeChat() {
         chatOpen = false;
@@ -394,6 +403,7 @@
         firstText = true;
         clearChat();
       }
+
       // Funksjon for å motta første melding fra Eier
       function introMessage(navn) {
         if (firstText === true) {
@@ -418,6 +428,7 @@
         }
         firstText = false;
       }
+
       // Funksjon for å sende melding
       function sendMessage() {
         const message = chatTextInput.value;
@@ -446,6 +457,7 @@
           ownerResponses[Math.floor(Math.random() * ownerResponses.length)];
         showMessages(randomResponse, "received");
       }
+
       // Funksjon for å tømme chatten for meldinger når brukeren åpner en ny chat
       function clearChat() {
         const chatMessages = document.querySelector(".chat-messages");
@@ -453,7 +465,8 @@
           chatMessages.removeChild(chatMessages.firstChild);
         }
       }
-      // Funksjon for å vise fram meldinger
+
+      // Funksjon for å vise fram meldinger og legge til sletteknapp på sendt melding
       function showMessages(message, type) {
         const chatMessages = document.querySelector(".chat-messages");
         const messageDiv = document.createElement("div");
@@ -477,8 +490,8 @@
         chatMessages.scrollTop = chatMessages.scrollHeight;
       }
 
-      //OPPGAVE 6 - funksjon for å lage snakkeboble når bruker trykker på kortet
-
+      //OPPGAVE 6
+      //array med hundelyder
       const dogSounds = [
         "Voff voff",
         "Grrr!",
@@ -487,6 +500,8 @@
         "Voff voff voff",
         "WRAFF!!!",
       ];
+
+      //funksjon for å lage snakkeboble når bruker trykker på kortet
       function dogGreeting(card) {
         const deleteBtnIdPrefix = "delete-btn-";
         const chatBtnIdPrefix = "chat-btn-";
@@ -516,7 +531,7 @@
 
         if (dogGreetingBubble) {
           dogGreetingBubble.addEventListener("click", (event) => {
-            event.stopPropagation();
+            event.stopPropagation(); // Prevent triggering dogGreetingCard again
             dogGreetingBubble.remove();
           });
         }
