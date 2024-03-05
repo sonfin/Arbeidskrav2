@@ -26,6 +26,8 @@ body {
   overflow-x: hidden;
 
 }
+
+
 /* nav bar styling */
 nav {
   display: flex;
@@ -86,7 +88,7 @@ nav {
   border-radius: 8px;
   padding: 40px;
   /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.071);
+  background: rgba(255, 255, 255, 0.206);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(15.6px);
@@ -94,6 +96,7 @@ nav {
   font-size: 1rem;
 }
 
+/*knapper styling*/
 /*https://getcssscan.com/css-buttons-examples*/
 .btn {
   padding: 10px;
@@ -147,8 +150,6 @@ nav {
   outline: 0;
 }
 
-
-
 #show-new-cards-btn {
   position: sticky;
   top: 100px;
@@ -160,6 +161,8 @@ nav {
   float: right;
   right: 20px;
 }
+
+/*dog greeting bubble styling*/
 .dog-greeting-bubble {
   position: absolute;
   top: -10%;
@@ -174,11 +177,9 @@ nav {
   align-items: center;
   font-size: 1rem;
 }
-
 .dog-icon {
   margin-right: 10px;
 }
-
 .dog-icon img {
   width: 30px;
   height: 30px;
@@ -196,7 +197,6 @@ nav {
   width: 275px;
   height: 50vh;
   opacity: 97%;
-  
 }
 /* Øvre del av boks */
 .chat-box h1 {
@@ -224,7 +224,6 @@ nav {
   left: 15%;
   text-align: left;
 }
-/* Her må jeg fikse img sizing. Så det ikke strekkes... */
 .img-div {
   display: flex;
   height: 30px;
@@ -316,4 +315,3 @@ nav {
 .chat-send-button:hover {
   cursor: pointer;
 }
-/* footer styling */
