@@ -162,20 +162,20 @@
             // Funksjon for å lage HTML-element for matched profile
             function createMatchedCardElement(profile) {
                 const matchedCard = document.createElement('div');
-                matchedCard.classList.add('matched-card');
+                matchedCard.className = 'matched-card';
 
                 const name = document.createElement('p');
-                name.classList.add('matched-name');
+                name.className = 'matched-name';
                 name.textContent = `${profile.name.first} ${profile.name.last}`;
                 matchedCard.appendChild(name);
 
                 const location = document.createElement('p');
-                location.classList.add('matched-location');
+                location.className = 'matched-location';
                 location.textContent = `${profile.location.city}, ${profile.location.country}`;
                 matchedCard.appendChild(location);
 
                 const age = document.createElement('p');
-                age.classList.add('matched-age');
+                age.className = 'matched-age';
                 age.textContent = `${profile.dob.age} År`;
                 matchedCard.appendChild(age);
 
