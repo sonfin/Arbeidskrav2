@@ -54,8 +54,6 @@
     </main>
     <footer></footer>
     <script>
-     
-
       //GLOBALE VARIABLER
       let dogs = [];
       let owners = [];
@@ -103,7 +101,7 @@
       }
 
       //OPPGAVE 1
-       //Henter inn div  fra HTML
+      //Henter inn div  fra HTML
       let dogCareCards = document.querySelector("#dog-care-cards");
 
       //Funksjon for å lage kort med data fra dogs og owners
@@ -205,14 +203,14 @@
         // Vet det ikke er nødvendig, men var litt gøyere enn å bare velge 5.
         // Funksjon for å forsikre meg om at det ikke kan bli 2 av den samme hunden
         function uniqueDogs() {
-          const uniqueDogs = [];
-          while (uniqueDogs.length < 5) {
+          const uniqueDogsArray = [];
+          while (uniqueDogsArray.length < 5) {
             const randomNumber = Math.floor(Math.random() * breedsArray.length);
-            if (!uniqueDogs.includes(randomNumber)) {
-              uniqueDogs.push(randomNumber);
+            if (!uniqueDogsArray.includes(randomNumber)) {
+              uniqueDogsArray.push(randomNumber);
             }
           }
-          return uniqueDogs.map((index) => breedsArray[index]);
+          return uniqueDogsArray.map((index) => breedsArray[index]);
         }
         const uniqueBreeds = uniqueDogs();
 
@@ -247,7 +245,6 @@
           const breedZeroRequest = await fetch(
             `https://dog.ceo/api/breed/${dog0}/images/random/20`
           );
-
           const breedZeroResult = await breedZeroRequest.json();
           return breedZeroResult.message;
         }
@@ -294,7 +291,7 @@
         }
         initializeBreeds();
       }
-      
+
       //Funksjon for å fjerne eksisterende kort og vise kort for den vagte hunderasen
       function showBreed(breed, index) {
         clearDogCareCards();
@@ -303,7 +300,6 @@
             dogCareCards.removeChild(dogCareCards.firstChild);
           }
         }
-        console.log(breed, index);
         if (index === 0) {
           displayBreedsAndOwners(breed0);
         } else if (index === 1) {
@@ -317,12 +313,25 @@
         }
       }
 
-      //Funksjon for å vise hunderasebilder og eier
+      //Funksjon for å vise hunderasebilder og unik eier
       function displayBreedsAndOwners(breed) {
         let cards = "";
+
+        // Funksjon for å kun få forskjellige personer opp ved siden av hundene.
+        function uniqueOwners() {
+          const uniqueOwnersArray = [];
+          while (uniqueOwnersArray.length < 20) {
+            const randomOwnerIndex = Math.floor(Math.random() * owners.length);
+            if (!uniqueOwnersArray.includes(randomOwnerIndex)) {
+              uniqueOwnersArray.push(randomOwnerIndex);
+            }
+          }
+          return uniqueOwnersArray.map((index) => owners[index]);
+        }
+        const uniqueOwner = uniqueOwners();
+
         for (let index = 0; index < breed.length; index++) {
-          const randomOwnerIndex = Math.floor(Math.random() * owners.length);
-          const owner = owners[randomOwnerIndex];
+          const owner = uniqueOwner[index];
           cards += `
         <div class="card" id="card-${index}">
           <div class="image-container">
