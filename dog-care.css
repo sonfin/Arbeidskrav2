@@ -4,6 +4,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 a {
   text-decoration: none;
@@ -22,6 +23,8 @@ body {
   background-image: url("dogcare-assets/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  overflow-x: hidden;
+
 }
 /* nav bar styling */
 nav {
@@ -49,15 +52,6 @@ nav {
   height: 50px;
   display: flex;
   justify-content: space-around;
-}
-
-.main-container {
-  width: 100%;
-  height: 100vh;
-  background-image: url("dating-assets/background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
 }
 
 /* cards styling */
