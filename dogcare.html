@@ -131,7 +131,7 @@
           deleteBtn.addEventListener("click", () => deleteCard(index));
 
           const chatBtn = document.querySelector(`#chat-btn-${index}`);
-          chatBtn.addEventListener("click", () => chatBox(index));
+          chatBtn.addEventListener("click", () => chatBox(index, owners[index]));
         }
 
         const cardElements = document.querySelectorAll(".card");
@@ -352,7 +352,7 @@
         // Add event listeners for chat buttons
         for (let index = 0; index < breed.length; index++) {
           const chatBtn = document.querySelector(`#chat-btn-${index}`);
-          chatBtn.addEventListener("click", () => chatBox(index));
+          chatBtn.addEventListener("click", () => chatBox(index, uniqueOwner[index]));
         }
 
         // Event listener for each card to dogGreeting
@@ -376,12 +376,12 @@
       closeBtn.addEventListener("click", closeChat);
 
       // Funksjon for å åpne chat
-      function chatBox(index) {
+      function chatBox(index, owner) {
         if (chatOpen) {
           closeChat();
           return;
         }
-        const owner = owners[index];
+    
         const dog = dogs[index];
         chatOpen = true;
         const chatDiv = document.querySelector(".chat-box");
@@ -415,7 +415,7 @@
       }
 
       // Funksjon for å motta første melding fra Eier
-      function introMessage(navn, dog) {
+      function introMessage(navn) {
         if (firstText === true) {
           const firstMessages = [
             `, og min trofaste følgesvenn er Charlie. Han er en nysgjerrig hund som alltid har nesen sin i alt!`,
@@ -541,7 +541,7 @@
 
         if (dogGreetingBubble) {
           dogGreetingBubble.addEventListener("click", (event) => {
-            event.stopPropagation(); // Prevent triggering dogGreetingCard again
+            event.stopPropagation();
             dogGreetingBubble.remove();
           });
         }
