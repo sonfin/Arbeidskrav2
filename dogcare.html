@@ -213,6 +213,7 @@
           return uniqueDogsArray.map((index) => breedsArray[index]);
         }
         const uniqueBreeds = uniqueDogs();
+        
 
         // Lager her 5 knapper med navn, id, klasse og event listener.
         for (let i = 0; i < uniqueBreeds.length; i++) {
@@ -414,19 +415,19 @@
       }
 
       // Funksjon for å motta første melding fra Eier
-      function introMessage(navn) {
+      function introMessage(navn, dog) {
         if (firstText === true) {
           const firstMessages = [
-            ", og min trofaste følgesvenn er Charlie. Han er en nysgjerrig dachshund som alltid har nesen sin i alt!",
-            ", og min livlige venn er Luna. En leken border collie som elsker å hente ball og imponere med triks!",
-            "! Min firbente venn, Rocky, er en sterk og kjærlig bernese mountain dog. Han er like god som en kosebamse!",
-            ", og min energibunt er Max, en glad golden retriever som sprer glede med hvert labbetrykk!",
-            ", og min pelskledde venn er Daisy. Hun er en kjærlig bichon frise som alltid får folk til å smile!",
-            ", og min lille kompis er Bella, en lekfull chihuahua med et stort hjerte til tross for sin lille størrelse!",
-            ", og min trofaste følgesvenn er Milo. Han er en eventyrlysten shiba inu som elsker å utforske verden rundt seg!",
-            ", og min beste venn er Coco, en sjarmerende fransk bulldog som alltid stjeler oppmerksomheten med sitt uttrykksfulle ansikt!",
-            "! Min firbente kamerat er Bella, en leken labrador retriever som er like glad i lek som i godbiter!",
-            "! Min lojale venn er Rocky, en robust rottweiler med et mykt hjerte. Han er den beste vaktbikkjen med en kjærlig side!",
+            `, og min trofaste følgesvenn er Charlie. Han er en nysgjerrig hund som alltid har nesen sin i alt!`,
+            ", og min livlige venn er Luna. En leken hund som elsker å hente ball og imponere med triks!",
+            "! Min firbente venn, Rocky, er en sterk og kjærlig hund. Han er like god som en kosebamse!",
+            ", og min energibunt er Max, en glad hund som sprer glede med hvert labbetrykk!",
+            ", og min pelskledde venn er Daisy. Hun er en kjærlig hund som alltid får folk til å smile!",
+            ", og min lille kompis er Bella, en lekfull hund med et stort hjerte til tross for sin lille størrelse!",
+            ", og min trofaste følgesvenn er Milo. Han er en eventyrlysten hund som elsker å utforske verden rundt seg!",
+            ", og min beste venn er Coco, en sjarmerende hund som alltid stjeler oppmerksomheten med sitt uttrykksfulle ansikt!",
+            "! Min firbente kamerat er Bella, en leken lhund som er like glad i lek som i godbiter!",
+            "! Min lojale venn er Rocky, en robust hund med et mykt hjerte. Han er den beste vaktbikkjen med en kjærlig side!",
           ];
           const randomFirstMessage =
             firstMessages[Math.floor(Math.random() * firstMessages.length)];
