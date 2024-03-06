@@ -22,6 +22,8 @@ a {
 a:hover {
   color: #a68582;
   text-decoration: underline #a68582;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 3px;
 }
 
 .nav-div {
