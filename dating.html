@@ -47,8 +47,6 @@
             <!-- Container for matchede kort skal i teorien legge seg her-->
             <div class="matched-cards">
                 <div class="image-grid">
-
-
                 </div>
             </div>
 
@@ -68,7 +66,7 @@
 
         <script>
 
-            // score og liked profiles
+            // Globale variabler for score, likte profiler og gjeldende profil
             let score = 10;
             let likedProfiles = [];
             let currentProfile;
@@ -76,24 +74,26 @@
             let currentMatchedCard;
             let editAgeInput;
 
-            //Funksjon for å endre border basert på kjønn. 
+            //Funksjon for å endre border basert på kjønn
             function setBorderStyles(profileCard, gender) {
                 if (gender === 'male') {
                     profileCard.style.border = '4px solid #5f535c';
+                    profileCard.style.borderRadius = '8px';
                 } else if (gender === 'female') {
                     profileCard.style.border = '4px solid #a68582';
+                    profileCard.style.borderRadius = '8px';
                 } else {
                     profileCard.style.border = '';
                 }
             }
 
-            //Funksjon som oppdaterer visning av scoret
+            //Funksjon som oppdaterer visning av score
             function updateScoreDisplay() {
                 const scoreDisplay = document.querySelector('#score');
                 scoreDisplay.textContent = score;
             }
 
-            //Funksjon for å vise type profil i kortet
+            //Funksjon for å vise profilinformasjon i dating-kortet
             function display(profile) {
                 const profileCard = document.querySelector('.dating-card');
                 profileCard.querySelector('img').src = profile.picture.large;
@@ -124,12 +124,12 @@
 
 
 
-            //Funksjon for å bytte ut kortet med en ny profil
+            //Funksjon for å bytte ut kortet med en ny profil ved venstreswipe
             function swipeLeft() {
                 fetchRandomProfile();
             }
 
-            //Funksjon for å legge til profilen i likte profiler
+            // Funksjon for å legge til profilen i likte profiler ved høyreswipe
             function swipeRight(profile) {
                 //Sjekk om brukeren har nådd maksimalt antall likte profiler
                 if (likedProfiles.length >= 10) {
@@ -202,7 +202,8 @@
             // Funksjon for å vise likte profiler
             function renderLikedProfiles() {
                 const matchedCardsContainer = document.querySelector('.matched-cards .image-grid');
-                matchedCardsContainer.innerHTML = ''; // Slette innehold før oppdatering
+                matchedCardsContainer.innerHTML = '';
+
 
                 likedProfiles.forEach(profile => {
                     const matchedCard = createMatchedCardElement(profile);
@@ -266,24 +267,15 @@
                 }
             }
 
-
-            //Funksjon for å oppdatere score-display
-            function updateScoreDisplay() {
-                const scoreDisplay = document.querySelector('#score-value');
-                scoreDisplay.textContent = score;
-            }
-
-            //Redusere score-poeng
+            // Funksjon for å redusere score-poeng
             function decreaseScore() {
                 score--;
-                updateScoreDisplay();
                 checkScore(); //sjekker om brukeren ikke har mer poeng
             }
 
-            // Prøve å endre matched cards her!
+            // Funksjon for å bekrefte redigering av profil
             function confirmEdit(profile, matchedCard) {
                 const editNameInput = document.querySelector('#edit-name');
-                const editAgeInput = document.querySelector('#edit-age');
                 const editLocationInput = document.querySelector('#edit-location');
 
                 const newName = editNameInput.value.trim();
