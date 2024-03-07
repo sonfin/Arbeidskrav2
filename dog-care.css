@@ -92,7 +92,7 @@ nav {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.206);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(15.6px);
   border: 1px solid rgb(255, 255, 255);
   font-size: 1rem;
@@ -161,7 +161,10 @@ nav {
   position: sticky;
   top: 100px;
   float: right;
-  right: 20px;
+  right: 7px;
+}
+.random-breeds button {
+  width: 150px;
 }
 
 /*dog greeting bubble styling*/
