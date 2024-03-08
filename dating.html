@@ -123,7 +123,9 @@
 
             //Funksjon for å bytte ut kortet med en ny profil ved venstreswipe
             function swipeLeft() {
+                decreaseScore();
                 fetchRandomProfile();
+                
             }
 
             // Funksjon for å legge til profilen i likte profiler ved høyreswipe
@@ -267,6 +269,7 @@
             // Funksjon for å redusere score-poeng
             function decreaseScore() {
                 score--;
+                updateScoreDisplay();
                 checkScore(); //sjekker om brukeren ikke har mer poeng
             }
 
