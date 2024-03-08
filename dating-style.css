@@ -44,7 +44,9 @@ body {
   background-size: contain;
   background-size: cover;
 }
-
+#score {
+  color: white;
+}
 .gender-container {
   display: flex;
   flex-grow: 1;
