@@ -61,7 +61,7 @@
       let breedsArray = [];
 
       //FETCH, INITIALISERE OG ERROR HÅNDTERING
-      //Funksjon for å hente inn 10 random hunde bilder
+      //Funksjon for å hente inn 100 random hundebilder
       async function getDogs() {
         const dogsRequest = await fetch(
           "https://dog.ceo/api/breeds/image/random/100"
@@ -70,21 +70,21 @@
         return dogsResult.message;
       }
 
-      //Funksjon for å hente inn alle hunderasene
-      async function getBreeds() {
-        const breedRequest = await fetch("https://dog.ceo/api/breeds/list/all");
-
-        const breedResult = await breedRequest.json();
-        return breedResult.message;
-      }
-
-      //Funksjon for å hente inn navn, lokasjon og bilde for 10 random brukere
+      //Funksjon for å hente inn navn, lokasjon og bilde for 100 random brukere
       async function getOwners() {
         const ownersRequest = await fetch(
           "https://randomuser.me/api/?results=100&inc=name,location,picture"
         );
         const ownersResult = await ownersRequest.json();
         return ownersResult.results;
+      }
+
+      //Funksjon for å hente inn alle hunderasene
+      async function getBreeds() {
+        const breedRequest = await fetch("https://dog.ceo/api/breeds/list/all");
+
+        const breedResult = await breedRequest.json();
+        return breedResult.message;
       }
 
       //Funksjon for å legge inn data i globale variabler breeds, dogs og owners, samt error håndtering
@@ -101,7 +101,7 @@
       }
 
       //OPPGAVE 1
-      //Henter inn div  fra HTML
+      //Henter inn div fra HTML
       let dogCareCards = document.querySelector("#dog-care-cards");
 
       //Funksjon for å lage kort med data fra dogs og owners
@@ -131,7 +131,9 @@
           deleteBtn.addEventListener("click", () => deleteCard(index));
 
           const chatBtn = document.querySelector(`#chat-btn-${index}`);
-          chatBtn.addEventListener("click", () => chatBox(index, owners[index]));
+          chatBtn.addEventListener("click", () =>
+            chatBox(index, owners[index])
+          );
         }
 
         const cardElements = document.querySelectorAll(".card");
@@ -213,7 +215,6 @@
           return uniqueDogsArray.map((index) => breedsArray[index]);
         }
         const uniqueBreeds = uniqueDogs();
-        
 
         // Lager her 5 knapper med navn, id, klasse og event listener.
         for (let i = 0; i < uniqueBreeds.length; i++) {
@@ -352,7 +353,9 @@
         // Add event listeners for chat buttons
         for (let index = 0; index < breed.length; index++) {
           const chatBtn = document.querySelector(`#chat-btn-${index}`);
-          chatBtn.addEventListener("click", () => chatBox(index, uniqueOwner[index]));
+          chatBtn.addEventListener("click", () =>
+            chatBox(index, uniqueOwner[index])
+          );
         }
 
         // Event listener for each card to dogGreeting
@@ -381,7 +384,7 @@
           closeChat();
           return;
         }
-    
+
         const dog = dogs[index];
         chatOpen = true;
         const chatDiv = document.querySelector(".chat-box");
@@ -511,6 +514,7 @@
         "WRAFF!!!",
       ];
 
+      //OPPGAVE 6
       //funksjon for å lage snakkeboble når bruker trykker på kortet
       function dogGreeting(card) {
         const deleteBtnIdPrefix = "delete-btn-";
